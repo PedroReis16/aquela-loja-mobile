@@ -2,25 +2,35 @@ import { StyleSheet, Text, View } from "react-native";
 
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
-export default function CategoriaCard({categoria, excluirCategoria}) {
-    return(
-        <View style={container}>
+export default function CategoriaCard({ categoria, excluirCategoria }) {
+    return (
+        <View style={styles.container}>
             <Text style={styles.nome}>{categoria.nome}</Text>
-            <EvilIcons name="trash" size={24} color="black" onPress={() => excluirCategoria(categoria.id)}/>
+            <View style={styles.icone}>
+                <EvilIcons name="trash" size={45} color="black" onPress={() => excluirCategoria(categoria.id.categoria.nome)} />
+            </View>
         </View>
-    );     
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
         flexDirection: 'row',
-        borderWidth: 2
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#fff',
+        borderWidth: 2,
+        width: '100%',
+        paddingHorizontal: 10,
     },
     nome: {
-        fontSize: 20
+        fontSize: 25,
+        marginLeft: 4,
+        alignSelf: 'center',
+        alignContent: 'center'
+    },
+    icone: {
+        marginBottom: 5,
+        alignSelf: 'center'
     }
 });

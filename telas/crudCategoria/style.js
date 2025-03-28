@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
         borderBlockColor: 'black',
         borderWidth: 2,
         borderRadius: 20,
-        alignItems: 'center'
+        alignItems: 'center',
+        fontSize: 20
     },
     vwCampos: {
         marginTop: 30,
@@ -26,10 +27,15 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     btnText: {
-        fontSize: 20,
+        fontSize: 25,
     },
     campoText: {
         fontSize: 20,
+    },
+    scvCards: {
+        marginTop: 40,
+        width: '80%',
+        borderBottomWidth: 2
     }
 });
 
