@@ -5,6 +5,8 @@ import { TabBar } from "./lib/resources/components/tab-bar";
 
 import HomeScreen from "./lib/resources/pages/home_page";
 import ProfileScreen from "./lib/resources/pages/profile_page";
+import DepartamentsScreen from "./lib/resources/pages/departaments_page";
+import FavoriteScreen from "./lib/resources/pages/favorite";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +21,8 @@ export default function App() {
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Departaments" component={DepartamentsScreen} />
+        <Tab.Screen name= "Favorites" component={FavoriteScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
