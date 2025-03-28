@@ -6,7 +6,7 @@ import styles from './style';
 export default function ProdutoCrud({navigation, route}) {
   return (
     <View style={styles.container}>
-      <Text>Tela 1!</Text>
+      <Text>Tela de produtos!</Text>
       <StatusBar style="auto" />
     </View>
   );

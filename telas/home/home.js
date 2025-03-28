@@ -12,6 +12,9 @@ export default function Home({ navigation, route }) {
                 <TouchableOpacity style={styles.btnNav} onPress={() => navigation.navigate('CrudProduto')}>
                     <Text>Produtos</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.btnNav} onPress={() => navigation.navigate('CrudCategoria')}>
+                    <Text>Categorias</Text>
+                </TouchableOpacity>
             </View>
 
             <StatusBar style="auto" />
