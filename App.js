@@ -1,12 +1,12 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { TabBar } from "./lib/resources/components/tab-bar";
+import { TabBar } from "./lib/resources/components/TabBar";
 
-import HomeScreen from "./lib/resources/pages/home_page";
-import ProfileScreen from "./lib/resources/pages/profile_page";
-import DepartamentsScreen from "./lib/resources/pages/departaments_page";
-import FavoriteScreen from "./lib/resources/pages/favorite";
+import HomeScreen from "./lib/resources/screens/HomeScreen";
+import ProfileScreen from "./lib/resources/screens/ProfileScreen";
+import DepartamentsScreen from "./lib/resources/screens/DepartamentsScreen";
+import FavoriteScreen from "./lib/resources/screens/FavoriteScreen";
 
 const Tab = createBottomTabNavigator();
 
