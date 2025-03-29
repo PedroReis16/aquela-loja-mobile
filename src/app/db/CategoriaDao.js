@@ -1,4 +1,4 @@
-// import getDbConnection from "./Connection.js";
+import getDbConnection from "./Connection";
 
 export async function createTable() {
     const query = `CREATE TABLE IF NOT EXISTS Categoria 

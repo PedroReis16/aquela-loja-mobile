@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { styles } from "./ProfileScreenStyle";
 
-export default function ProfileScreen() {
+export default function ProfileScreen({navigation, route}) {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.vwButtons}>

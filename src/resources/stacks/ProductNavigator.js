@@ -6,6 +6,7 @@ import HomeScreen from "../../resources/screens/home_screen/HomeScreen";
 import ProdutoCrud from "../../resources/screens/new_product_screen/NewProductScreen";
 import CategoriaCrud from "../screens/new_categories_screen/NewCategory";
 import { SearchBar } from "../../resources/components/search_bar/SearchBar";
+import ProfileScreen from "../screens/profile_screen/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,11 +21,7 @@ export default ProductNavigator = () => {
     >
       <Stack.Screen
         name="Home"
-        component={HomeScreen}
-        options={{
-          headerBackVisible: false,
-          header: (props) => <SearchBar {...props} />,
-        }}
+        component={ProfileScreen}
       />
       <Stack.Screen
         name="CrudProduto"
