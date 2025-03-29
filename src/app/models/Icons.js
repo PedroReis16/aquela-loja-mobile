@@ -4,4 +4,6 @@ export const ICON_MAP = {
   Departamentos: "list",
   Favoritos: "heart",
   Garbage: "trash",
+  Search: "search",
+  Cart: "shopping-cart",
 };

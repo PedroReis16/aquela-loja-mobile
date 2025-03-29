@@ -15,7 +15,7 @@ export default ProductNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         animation: "fade",
-        headerShown: true, // Alterado para true para exibir o cabeçalho
+        headerShown: true,
       }}
     >
       <Stack.Screen
@@ -23,8 +23,6 @@ export default ProductNavigator = () => {
         component={HomeScreen}
         options={{
           headerBackVisible: false,
-          // Você pode customizar o cabeçalho aqui
-          headerTitle: "Início",
           header: (props) => <SearchBar {...props} />,
         }}
       />

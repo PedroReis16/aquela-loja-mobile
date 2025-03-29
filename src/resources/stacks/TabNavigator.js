@@ -7,6 +7,7 @@ import ProfileScreen from "../../resources/screens/ProfileScreen";
 
 import { TabBar } from "../../resources/components/tab_bar/TabBar";
 import ProductNavigator from "./ProductNavigator";
+import { SearchBar } from "../../resources/components/search_bar/SearchBar";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,14 +16,37 @@ export default TabNavigator = () => {
     <Tab.Navigator
       tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
-        animation: "fade",
-        headerShown: false,
       }}
     >
-      <Tab.Screen name="Inicio" component={ProductNavigator} />
-      <Tab.Screen name="Departamentos" component={DepartamentsScreen} />
-      <Tab.Screen name="Favoritos" component={FavoriteScreen} />
-      <Tab.Screen name="Perfil" component={ProfileScreen} />
+      <Tab.Screen
+        name="Inicio"
+        component={ProductNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Departamentos"
+        component={DepartamentsScreen}
+        options={{
+          headerBackVisible: false,
+          header: (props) => <SearchBar {...props} />,
+        }}
+      />
+      <Tab.Screen
+        name="Favoritos"
+        component={FavoriteScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Perfil"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 };
