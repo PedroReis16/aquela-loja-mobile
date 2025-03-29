@@ -19,10 +19,10 @@ export default TabNavigator = () => {
         headerShown: false,
       }}
     >
-      <Tab.Screen name="Home" component={ProductNavigator} />
-      <Tab.Screen name="Departaments" component={DepartamentsScreen} />
-      <Tab.Screen name="Favorites" component={FavoriteScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Inicio" component={ProductNavigator} />
+      <Tab.Screen name="Departamentos" component={DepartamentsScreen} />
+      <Tab.Screen name="Favoritos" component={FavoriteScreen} />
+      <Tab.Screen name="Perfil" component={ProfileScreen} />
     </Tab.Navigator>
   );
 };

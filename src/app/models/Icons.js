@@ -1,6 +1,7 @@
 export const ICON_MAP = {
-  Home: "home",
-  Profile: "user",
-  Departaments: "grid",
-  Favorites: "heart",
+  Inicio: "home",
+  Perfil: "user",
+  Departamentos: "list",
+  Favoritos: "heart",
+  Garbage: "trash",
 };

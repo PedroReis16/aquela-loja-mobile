@@ -2,6 +2,7 @@ import { Text, TouchableOpacity } from "react-native";
 import FeatherIcons from "react-native-vector-icons/Feather";
 import { ICON_MAP as Icons } from "../../../app/models/Icons";
 import { styles } from "../tab_bar/styles/TabItemStyle";
+import { COLORS as Colors } from "../../../app/models/Colors";
 
 export const TabItem = ({ route, isFocused, onPress }) => {
   const iconName = Icons[route.name] || "circle";
@@ -14,7 +15,7 @@ export const TabItem = ({ route, isFocused, onPress }) => {
     >
       <FeatherIcons
         name={iconName}
-        color={isFocused ? "#007bff" : "#888"}
+        color={isFocused ? Colors.primaryColor : Colors.darkGray}
         size={24}
         strokeWidth={isFocused ? 2.5 : 1.5}
       />

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS as Colors } from "../../../../app/models/Colors";
 
 export const styles = StyleSheet.create({
     tabButton: {
@@ -7,7 +8,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     tabLabel: {
-        color: '#007bff',
+        color: Colors.white,
         fontSize: 10,
         marginTop: 4
     }
