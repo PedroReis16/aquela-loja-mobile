@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "../../resources/screens/home_screen/HomeScreen";
 import ProdutoCrud from "../../resources/screens/new_product_screen/NewProductScreen";
-import CategoriaCrud from "../../resources/screens/categories_screen/NewCategory";
+import CategoriaCrud from "../screens/new_categories_screen/NewCategory";
 import { SearchBar } from "../../resources/components/search_bar/SearchBar";
 
 const Stack = createNativeStackNavigator();

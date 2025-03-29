@@ -1,9 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import DepartamentsScreen from "../../resources/screens/DepartamentsScreen";
+import CategoriesScreen from "../screens/categories_screen/CategoriesScreen";
 import FavoriteScreen from "../../resources/screens/FavoriteScreen";
-import ProfileScreen from "../../resources/screens/ProfileScreen";
+import ProfileScreen from "../screens/profile_screen/ProfileScreen";
 
 import { TabBar } from "../../resources/components/tab_bar/TabBar";
 import ProductNavigator from "./ProductNavigator";
@@ -13,11 +13,7 @@ const Tab = createBottomTabNavigator();
 
 export default TabNavigator = () => {
   return (
-    <Tab.Navigator
-      tabBar={(props) => <TabBar {...props} />}
-      screenOptions={{
-      }}
-    >
+    <Tab.Navigator tabBar={(props) => <TabBar {...props} />} screenOptions={{}}>
       <Tab.Screen
         name="Inicio"
         component={ProductNavigator}
@@ -26,8 +22,8 @@ export default TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Departamentos"
-        component={DepartamentsScreen}
+        name="Categorias"
+        component={CategoriesScreen}
         options={{
           headerBackVisible: false,
           header: (props) => <SearchBar {...props} />,
