@@ -37,23 +37,35 @@ export default function CategoriaCrud({ navigation, route }) {
         }
     }
 
-    async function adicionaCategoria() {
+    async function salvaCategoria() {
+        const novo = (id == undefined);
+
         let obj = {
-            id: createUniqueId(),
+            id: novo ? createUniqueId() : id,
             nome: nome
         };
 
+        console.log(novo);
         try {
-            let resposta = await Dao.adicionaCategoria(obj)
+            if (novo) {
+                let resposta = await Dao.adicionaCategoria(obj)
 
-            if (resposta)
-                Alert.alert('Sucesso', 'Categoria criada');
-            else
-                Alert.alert('Erro', 'Não foi possível inserir a categoria')
+                if (resposta)
+                    Alert.alert('Sucesso', 'Categoria criada');
+                else
+                    Alert.alert('Erro', 'Não foi possível inserir a categoria');
+            } else {
+                let resposta = await Dao.editaCategoria(obj);
+
+                if (resposta)
+                    Alert.alert('Sucesso', 'Categoria alterada');
+                else
+                    Alert.alert('Erro', 'Não foi possível alterar');
+            }
 
             Keyboard.dismiss();
             limpaCampos();
-            carregaCategorias();
+            await carregaCategorias();
         } catch (error) {
             Alert.alert('Erro', 'Não foi possível inserir a categoria')
             console.log(error)
@@ -65,7 +77,7 @@ export default function CategoriaCrud({ navigation, route }) {
             [
                 {
                     text: 'Sim',
-                    onPress: () => { }
+                    onPress: () => efetivaDelecao(id),
                 },
                 {
                     text: 'Não',
@@ -75,13 +87,33 @@ export default function CategoriaCrud({ navigation, route }) {
         )
     }
 
+    function editaCategoria(id) {
+
+        console.log(id);
+
+        const categoria = categorias.find(cat => cat.id == id)
+
+        if (categoria != undefined) {
+            console.log(nome);
+            setId(categoria.id);
+            setNome(categoria.nome);
+        }
+    }
+
+    async function efetivaDelecao(id) {
+        await Dao.excluirCategoria(id);
+        Keyboard.dismiss();
+        limpaCampos();
+        await carregaCategorias();
+    }
+
     function createUniqueId() {
         return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
     }
 
     function limpaCampos() {
-        setNome('');
-        setId('');
+        setNome("");
+        setId(undefined);
     }
 
     return (
@@ -89,15 +121,15 @@ export default function CategoriaCrud({ navigation, route }) {
             <View style={styles.vwCampos}>
                 <Text style={styles.campoText}>Nome</Text>
                 <TextInput style={styles.txtCampo} onChangeText={(text) => setNome(text)} value={nome} />
-                <TouchableOpacity style={styles.btnCriar} onPress={() => adicionaCategoria()}>
-                    <Text style={styles.btnText}>Criar</Text>
+                <TouchableOpacity style={styles.btnCriar} onPress={() => salvaCategoria()}>
+                    <Text style={styles.btnText}>Salvar</Text>
                 </TouchableOpacity>
             </View>
 
             <ScrollView style={styles.scvCards}>
                 {
                     categorias.map((categoria, index) => (
-                        <CategoriaCard categoria={categoria} removerElemento={excluirCategoria}
+                        <CategoriaCard categoria={categoria} excluirCategoria={excluirCategoria} editarCategoria={editaCategoria}
                             key={index.toString()} />
                     ))
                 }

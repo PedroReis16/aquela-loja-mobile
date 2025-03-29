@@ -39,3 +39,21 @@ export async function adicionaCategoria(categoria) {
     await con.closeAsync();
     return result.changes == 1;
 }
+
+export async function excluirCategoria(id) {
+    let con = await getDbConnection();
+
+    const result = await con.runAsync('delete from Categoria where id = ?', [id]);
+    await con.closeAsync();
+
+    return result.changes == 1;  
+}
+
+export async function editaCategoria(categoria) {
+    let con = await getDbConnection();
+
+    const result = await con.runAsync('update Categoria set nome = ? where id = ?', [categoria.nome, categoria.id])
+    await con.closeAsync();
+
+    return result.changes == 1;
+}
