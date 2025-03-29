@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../../resources/screens/home_screen/HomeScreen";
 import ProdutoCrud from "../../resources/screens/new_product_screen/NewProductScreen";
 import CategoriaCrud from "../../resources/screens/categories_screen/NewCategory";
+import { SearchBar } from "../../resources/components/search_bar/SearchBar";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,13 +15,18 @@ export default ProductNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         animation: "fade",
-        headerShown: false,
+        headerShown: true, // Alterado para true para exibir o cabeçalho
       }}
     >
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ headerBackVisible: false }}
+        options={{
+          headerBackVisible: false,
+          // Você pode customizar o cabeçalho aqui
+          headerTitle: "Início",
+          header: (props) => <SearchBar {...props} />,
+        }}
       />
       <Stack.Screen
         name="CrudProduto"

@@ -5,7 +5,9 @@ import TabNavigator from "./src/app/stacks/TabNavigator";
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer
+    
+    >
       <TabNavigator />
     </NavigationContainer>
   );
