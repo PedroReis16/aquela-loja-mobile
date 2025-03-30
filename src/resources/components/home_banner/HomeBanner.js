@@ -8,10 +8,11 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
+import { styles } from "./HomeBannerStyle"; // Importando os estilos do arquivo HomeBannerStyle.js
 
 const { width } = Dimensions.get("window");
 
-const ImageCarousel = ({
+export const ImageCarousel = ({
   images,
   autoPlay = true,
   autoPlayInterval = 3000,
@@ -108,7 +109,7 @@ const ImageCarousel = ({
         contentContainerStyle={styles.scrollViewContent}
       >
         {images.map((image, index) => (
-          <View key={index} style={styles.imageContainer}>
+          <View key={index} style={{ width, height: 250 }}>
             <Image source={image} style={styles.image} resizeMode="cover" />
           </View>
         ))}
@@ -117,48 +118,3 @@ const ImageCarousel = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: 250,
-    width: "100%",
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-  },
-  imageContainer: {
-    width,
-    height: 250,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
-  paginationContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    bottom: 10,
-    width: "100%",
-  },
-  paginationDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "white",
-    marginHorizontal: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-  },
-  noImagesContainer: {
-    height: 250,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f0f0f0",
-  },
-});
-
-export default ImageCarousel;
