@@ -42,7 +42,7 @@ export default ProfileNavigator = () => {
       <Stack.Screen
         name="CrudCategoria"
         component={CategoriaCrud}
-        options={{ headerBackVisible: true, title: "Controle de categoria" }}
+        options={{ headerBackVisible: true, title: "Gestão de categorias" }}
       />
       {/* <Stack.Screen
         name="CrudProduto"
