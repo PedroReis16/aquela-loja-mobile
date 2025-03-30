@@ -21,7 +21,7 @@ export default function StorageDetailsScreen({ navigation }) {
           icon={Icons.Package}
           title={"Produtos"}
           description={"Gerencie os produtos disponíveis na loja"}
-          onTap={() => navigation.navigate("CrudProduto")}
+          onTap={() => navigation.navigate("ProductManagement")}
         />
         <ProfileWidgetCard
           icon={Icons.TrendingUp}

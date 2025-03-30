@@ -16,4 +16,5 @@ export const ICON_MAP = {
   Widgets: "grid",
   Edit: "edit-2",
   Save: "save",
+  Add: "plus",
 };

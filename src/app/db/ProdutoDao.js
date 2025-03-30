@@ -1,7 +1,7 @@
 import getDbConnection from "./Connection";
 
 export async function createTable() {
-    const query = `CREATE TABLE IF NOT EXISTS Produto 
+  const query = `CREATE TABLE IF NOT EXISTS Produto 
     (
         codigo text not null primary key,
         descricao text not null,
@@ -10,39 +10,69 @@ export async function createTable() {
         imagem TEXT not null
     )`;
 
-    const con = await getDbConnection();
-    con.execAsync(query);
-    con.closeAsync();
+  const con = await getDbConnection();
+  con.execAsync(query);
+  con.closeAsync();
 }
 
 export async function findAllProdutos() {
-    var result = [];
+  var result = [];
 
-    const con = await getDbConnection();
-    const linhas = await con.getAllAsync('SELECT * FROM Produto')
+  const con = await getDbConnection();
+  const linhas = await con.getAllAsync("SELECT * FROM Produto");
 
-    for (const linha of linhas) {
-        let prod = {
-            codigo: linha.codigo,
-            descricao: linha.descricao ,
-            preco: linha.preco,
-            categoria: linha.categoria,
-            imagem: linha.imagem
-        }
+  for (const linha of linhas) {
+    let prod = {
+      codigo: linha.codigo,
+      descricao: linha.descricao,
+      preco: linha.preco,
+      categoria: linha.categoria,
+      imagem: linha.imagem,
+    };
 
-        result.push(prod);
-    }
+    result.push(prod);
+  }
 
-    return result;
+  return [
+    {
+      codigo: "0",
+      descricao: "Produto teste",
+      preco: 19.99,
+      categoria: "Teste",
+      imagem: require("../../../assets/banner_images/banner-four.jpg"),
+    },
+    {
+      codigo: "1",
+      descricao: "Produto teste",
+      preco: 19.99,
+      categoria: "Teste",
+      imagem: require("../../../assets/banner_images/banner-five.jpg"),
+    },
+    {
+      codigo: "2",
+      descricao: "Produto teste",
+      preco: 19.99,
+      categoria: "Teste",
+      imagem: require("../../../assets/banner_images/banner-five.jpg"),
+    },
+  ];
+  return result;
 }
 
 export async function adicionaProduto(produto) {
-    let con = await getDbConnection();
+  let con = await getDbConnection();
 
-    const result = await con.runAsync
-        ('insert into Produto (codigo, descricao, preco, categoria, imagem) values (?,?,?,?, ?)',
-             [produto.codigo, produto.descricao, produto.preco, produto.categoria, produto.imagem]);
+  const result = await con.runAsync(
+    "insert into Produto (codigo, descricao, preco, categoria, imagem) values (?,?,?,?, ?)",
+    [
+      produto.codigo,
+      produto.descricao,
+      produto.preco,
+      produto.categoria,
+      produto.imagem,
+    ]
+  );
 
-    await con.closeAsync();
-    return result.changes == 1;
+  await con.closeAsync();
+  return result.changes == 1;
 }

@@ -29,15 +29,15 @@ export default function ProdutoCrud({ navigation, route }) {
     setTodasCategorias(categorias);
   }
 
-  async function carregaProdutos() {
-    try {
-      let produtos = await ProdutoDao.findAllProdutos();
-      setProdutos(produtos);
-    } catch (e) {
-      Alert.alert('Erro', 'Não foi possível carregar os produtos');
-      console.log(e);
-    }
-  }
+  // async function carregaProdutos() {
+  //   try {
+  //     let produtos = await ProdutoDao.findAllProdutos();
+  //     setProdutos(produtos);
+  //   } catch (e) {
+  //     Alert.alert('Erro', 'Não foi possível carregar os produtos');
+  //     console.log(e);
+  //   }
+  // }
 
   const selecionarImagem = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
