@@ -16,9 +16,6 @@ export const styles = StyleSheet.create({
     elevation: 2,
     alignItems: "center",
   },
-  wideCard: {
-    flex: 0.48,
-  },
   cardTitleContainer: {
     flexDirection: "row",
     alignItems: "center",
