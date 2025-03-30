@@ -22,7 +22,6 @@ export async function findAllCards({ userId }) {
   let con = await getDbConnection();
   const linhas = await con.getAllAsync("SELECT * FROM userCard ");
 
-  console.log(linhas);
   for (const linha of linhas) {
     let card = {
       id: linha.id,
@@ -44,7 +43,6 @@ export async function addCard(card) {
   try {
     let con = await getDbConnection();
 
-    console.log(card);
     const result = await con.runAsync(
       "insert into userCard (id, userId, holderName, cardNumber, type, expirationDate, cvv) values (?,?,?,?,?,?,?)",
       [

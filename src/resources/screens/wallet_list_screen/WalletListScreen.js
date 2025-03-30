@@ -1,18 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  SafeAreaView,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
+import { FlatList, SafeAreaView, TouchableOpacity } from "react-native";
 import { createTable, findAllCards } from "../../../app/db/CardDao";
 import { AuthContext } from "../../context/AuthContext";
 import { CreditCard } from "../../components/credit_card/CreditCard";
-// import { styles } from "./WalletListScreenStyle";
-// import { COLORS as Colors } from "../../../app/models/Colors";
+import { styles } from "./WalletListScreenStyle";
+import { Feather } from "@expo/vector-icons";
+import { ICON_MAP as Icons } from "../../../app/models/Icons";
+import { COLORS as Colors } from "../../../app/models/Colors";
 
 export default function WalletListScreen({ navigation }) {
   const { user } = useContext(AuthContext);
@@ -50,34 +44,13 @@ export default function WalletListScreen({ navigation }) {
         contentContainerStyle={styles.listContainer}
       />
       <TouchableOpacity
+        style={styles.addButton}
         onPress={() => {
           navigation.navigate("NewCard");
         }}
       >
-        <Text>Adicionar cartão</Text>
+        <Feather name={Icons.Add} size={32} color={Colors.white} />
       </TouchableOpacity>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    paddingTop: StatusBar.currentHeight || 0,
-  },
-  header: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eaeaea",
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    marginLeft: 8,
-  },
-  listContainer: {
-    padding: 16,
-  },
-});
