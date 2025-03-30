@@ -11,6 +11,7 @@ import HomeScreen from "../screens/home_screen/HomeScreen";
 import { COLORS as Colors } from "../../app/models/Colors";
 import { AuthContext } from "../context/AuthContext";
 import LoginScreen from "../screens/login_screen/LoginScreen";
+import BuyProductStack from "./BuyProductStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,13 +28,18 @@ export default TabNavigator = () => {
           header: (props) => <SearchBar {...props} />,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Categorias"
         component={CategoriesScreen}
         options={{
           headerBackVisible: false,
           header: (props) => <SearchBar {...props} />,
         }}
+      /> */}
+      <Tab.Screen
+        name="Categorias"
+        component={BuyProductStack}
+        options={{ headerShown: false, headerBackVisible: false }}
       />
       <Tab.Screen
         name="Favoritos"
