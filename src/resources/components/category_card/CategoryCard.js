@@ -1,16 +1,27 @@
-import { Text, View } from "react-native";
-import  styles  from "./CategoryCardStyle";
+import { Text, TouchableOpacity, View } from "react-native";
+import styles from "./CategoryCardStyle";
+import { Feather } from "@expo/vector-icons";
+import { ICON_MAP as Icons } from "../../../app/models/Icons";
+import { COLORS as Colors } from "../../../app/models/Colors";
 
-import EvilIcons from "@expo/vector-icons/EvilIcons";
-
-export default function CategoriaCard({ categoria, excluirCategoria, editarCategoria }) {
+export default function CategoryCard({
+  categoria,
+  excluirCategoria,
+  editarCategoria,
+}) {
   return (
-      <View style={styles.container}>
-          <Text style={styles.nome}>{categoria.nome}</Text>
-          <View style={styles.icone}>
-              <EvilIcons name="trash" size={45} color="black" onPress={() => excluirCategoria(categoria.id, categoria.nome)} />
-              <EvilIcons name="pencil" size={45} color="black" onPress={() => editarCategoria(categoria.id)}/>
-          </View>
+    <View style={styles.container}>
+      <Text style={styles.title}>{categoria.nome}</Text>
+      <View style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => editarCategoria(categoria.id)}>
+          <Feather name={Icons.Edit} size={20} color={Colors.black} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => excluirCategoria(categoria.id, categoria.nome)}
+        >
+          <Feather name={Icons.Delete} size={20} color={Colors.error} />
+        </TouchableOpacity>
       </View>
+    </View>
   );
 }
