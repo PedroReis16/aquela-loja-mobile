@@ -16,7 +16,6 @@ export default function ProdutoList({ navigation, route }) {
     const [produtosFiltrados, setProdutosFiltrados] = useState([]);
 
     useEffect(() => {
-        console.log('inciando pagina')
         iniciaPagina();
     }, []);
 
@@ -76,7 +75,6 @@ export default function ProdutoList({ navigation, route }) {
     }
 
     async function editarProduto(produto) {
-        console.log('passando no editar')
         navigation.navigate('CrudProduto', { produtoParam: produto })
     }
 

@@ -65,27 +65,3 @@ export async function editarProduto(produto) {
 
     return result.changes == 1;
 }
-
-export async function findByCodigo(codigo) {
-    const con = await getDbConnection();
-
-    console.log(codigo);
-    try {
-        const result = await con.runAsync('SELECT * FROM Produto WHERE codigo = ?', [codigo]);
-        console.log(result);
-        const linha = result.rows[0];
-        
-        return {
-            codigo: linha.codigo,
-            descricao: linha.descricao,
-            preco: linha.preco,
-            categoria: linha.categoria,
-            imagem: linha.imagem
-        };
-    } catch (e) {
-        console.error("Erro ao buscar produto por código:", e);
-        throw e;
-    } finally {
-        await con.closeAsync();
-    }
-}

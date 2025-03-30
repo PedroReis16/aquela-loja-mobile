@@ -60,8 +60,6 @@ export default function ProdutoCrud({ navigation, route }) {
       return;
     }
 
-    console.log('salvando')
-
     const novo = (codigo == undefined);
     let obj = {
       codigo: novo ? uuid.v4() : codigo,
@@ -72,7 +70,6 @@ export default function ProdutoCrud({ navigation, route }) {
     };
     try {
       if (novo) {
-        console.log(obj.codigo)
         let resposta = await ProdutoDao.adicionaProduto(obj)
 
         if (resposta)
@@ -80,7 +77,6 @@ export default function ProdutoCrud({ navigation, route }) {
         else
           Alert.alert('Erro', 'Não foi possível inserir o produto');
       } else {
-        console.log('editando produto')
         let resposta = await ProdutoDao.editarProduto(obj);
 
         if (resposta)
