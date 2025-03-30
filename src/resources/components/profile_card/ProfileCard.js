@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styles } from "./ProfileCardStyle";
 import { Feather } from "@expo/vector-icons";
 import { COLORS as Colors } from "../../../app/models/Colors";
+import { AuthContext } from "../../context/AuthContext";
 
 export function ProfileCard({ userName }) {
+  const { logout } = useContext(AuthContext);
+
   return (
     <View style={styles.header}>
       <View style={styles.profileSection}>
@@ -21,7 +24,12 @@ export function ProfileCard({ userName }) {
           </View>
         </View>
       </View>
-      <TouchableOpacity style={styles.logoutButton}>
+      <TouchableOpacity
+        style={styles.logoutButton}
+        onPress={() => {
+          logout();
+        }}
+      >
         <Feather name="log-out" size={16} color={Colors.error} />
       </TouchableOpacity>
     </View>
