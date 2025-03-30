@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import ProdutoCrud from "../screens/new_product_screen/NewProductScreen";
 import CategoriaCrud from "../screens/new_categories_screen/CategoryManagement";
 import ProfileScreen from "../screens/profile_screen/ProfileScreen";
+import ProdutoCrud from "../screens/new_product_screen/NewProductScreen";
 import { COLORS as Colors } from "../../app/models/Colors";
 import StorageDetailsScreen from "../screens/storage_details_screen/StorageDetailsScreen";
 
@@ -44,11 +45,11 @@ export default ProfileNavigator = () => {
         component={CategoriaCrud}
         options={{ headerBackVisible: true, title: "Gestão de categorias" }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="CrudProduto"
         component={ProdutoCrud}
         options={{ headerBackVisible: true, title: "Cadastro de produto" }}
-      />*/}
+      />
     </Stack.Navigator>
   );
 };
