@@ -35,6 +35,7 @@ export default function ProfileScreen({ navigation, route }) {
               icon={Icons.Wallet}
               title={"Carteira"}
               description={"Gerencie seus cartões"}
+              onTap={() => navigation.navigate("UserWalletStack")}
             />
             <ProfileWidgetCard
               icon={Icons.Truck}
@@ -45,7 +46,9 @@ export default function ProfileScreen({ navigation, route }) {
               <ProfileWidgetCard
                 icon={Icons.Package}
                 title={"Estoque"}
-                description={"Gerencie os produtos, categorias e visualize como andam suas vendas"}
+                description={
+                  "Gerencie os produtos, categorias e visualize como andam suas vendas"
+                }
                 onTap={() => navigation.navigate("StorageDetails")}
               />
             )}
