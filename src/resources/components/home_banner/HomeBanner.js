@@ -19,18 +19,18 @@ const ImageCarousel = ({
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollViewRef = useRef(null);
 
-  // Função para avançar para a próxima imagem
+  // Função para avançar para a próxima imagem usando a função de atualização do state
   const goToNextSlide = () => {
-    // Se estamos na última imagem, voltar para a primeira
-    if (activeIndex === images.length - 1) {
-      scrollViewRef.current.scrollTo({ x: 0, animated: true });
-    } else {
-      // Caso contrário, avançar para a próxima
-      scrollViewRef.current.scrollTo({
-        x: (activeIndex + 1) * width,
-        animated: true,
-      });
-    }
+    setActiveIndex((prevIndex) => {
+      const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({
+          x: nextIndex * width,
+          animated: true,
+        });
+      }
+      return nextIndex;
+    });
   };
 
   // Configuração do timer para autoplay
@@ -48,7 +48,7 @@ const ImageCarousel = ({
         clearInterval(timer);
       }
     };
-  }, [activeIndex, autoPlay, autoPlayInterval, images?.length]);
+  }, [autoPlay, autoPlayInterval, images?.length]);
 
   // Função que lida com o evento de rolagem
   const handleScroll = (event) => {
@@ -63,10 +63,8 @@ const ImageCarousel = ({
   // Função para navegar para um slide específico
   const goToSlide = (index) => {
     if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({
-        x: index * width,
-        animated: true,
-      });
+      scrollViewRef.current.scrollTo({ x: index * width, animated: true });
+      setActiveIndex(index);
     }
   };
 
