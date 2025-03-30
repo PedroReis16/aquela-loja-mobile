@@ -16,7 +16,7 @@ export default function ProfileScreen({navigation, route}) {
         <View>
           <TouchableOpacity
             style={styles.btnNav}
-            onPress={() => navigation.navigate("CrudProduto")}
+            onPress={() => navigation.navigate("ProdutoList")}
           >
             <Text>Produtos</Text>
           </TouchableOpacity>

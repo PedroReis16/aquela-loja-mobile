@@ -24,7 +24,7 @@ export async function findAllProdutos() {
     for (const linha of linhas) {
         let prod = {
             codigo: linha.codigo,
-            descricao: linha.descricao ,
+            descricao: linha.descricao,
             preco: linha.preco,
             categoria: linha.categoria,
             imagem: linha.imagem
@@ -41,8 +41,51 @@ export async function adicionaProduto(produto) {
 
     const result = await con.runAsync
         ('insert into Produto (codigo, descricao, preco, categoria, imagem) values (?,?,?,?, ?)',
-             [produto.codigo, produto.descricao, produto.preco, produto.categoria, produto.imagem]);
+            [produto.codigo, produto.descricao, produto.preco, produto.categoria, produto.imagem]);
 
     await con.closeAsync();
     return result.changes == 1;
+}
+
+export async function excluirCategoria(codigo) {
+    let con = await getDbConnection();
+
+    const result = await con.runAsync('delete from Produto where codigo = ?', [codigo]);
+    await con.closeAsync();
+
+    return result.changes == 1;
+}
+
+export async function editarProduto(produto) {
+    let con = await getDbConnection();
+
+    const result = await con.runAsync('update Produto set descricao = ?, preco = ?, categoria = ?, imagem = ? where codigo = ?',
+        [produto.descricao, produto.preco, produto.categoria, produto.imagem, produto.codigo])
+    await con.closeAsync();
+
+    return result.changes == 1;
+}
+
+export async function findByCodigo(codigo) {
+    const con = await getDbConnection();
+
+    console.log(codigo);
+    try {
+        const result = await con.runAsync('SELECT * FROM Produto WHERE codigo = ?', [codigo]);
+        console.log(result);
+        const linha = result.rows[0];
+        
+        return {
+            codigo: linha.codigo,
+            descricao: linha.descricao,
+            preco: linha.preco,
+            categoria: linha.categoria,
+            imagem: linha.imagem
+        };
+    } catch (e) {
+        console.error("Erro ao buscar produto por código:", e);
+        throw e;
+    } finally {
+        await con.closeAsync();
+    }
 }
