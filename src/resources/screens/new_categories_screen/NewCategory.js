@@ -38,6 +38,12 @@ export default function CategoriaCrud({ navigation, route }) {
     }
 
     async function salvaCategoria() {
+        if (nome === undefined) {
+            Alert.alert('Incompleto', 'faltam dados para o cadastro');
+
+            return;
+        }
+
         const novo = (id == undefined);
 
         let obj = {
@@ -45,7 +51,6 @@ export default function CategoriaCrud({ navigation, route }) {
             nome: nome
         };
 
-        console.log(novo);
         try {
             if (novo) {
                 let resposta = await Dao.adicionaCategoria(obj)
@@ -88,9 +93,6 @@ export default function CategoriaCrud({ navigation, route }) {
     }
 
     function editaCategoria(id) {
-
-        console.log(id);
-
         const categoria = categorias.find(cat => cat.id == id)
 
         if (categoria != undefined) {
