@@ -29,7 +29,7 @@ export default function ProdutoCrud({ navigation, route }) {
       const produto = route.params.produtoParam;
       setCodigo(produto.codigo);
       setDescricao(produto.descricao);
-      setPreco(produto.preco);
+      setPreco(produto.preco ? String(produto.preco) : "");
       setCategoria(produto.categoria)
       setImagemUri(produto.imagem)
     }
@@ -120,7 +120,7 @@ export default function ProdutoCrud({ navigation, route }) {
           keyboardType="decimal-pad"
           style={styles.txtCampo}
           value={preco}
-          onChangeText={setPreco}
+          onChangeText={(value) => setPreco(value.replace(",", "."))}
         />
 
         <Text style={styles.campoText}>Categoria</Text>

@@ -1,12 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { Text, View, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import * as CategoriaDao from "../../../app/db/CategoriaDao";
 import * as ProdutoDao from "../../../app/db/ProdutoDao";
 import styles from './NewProductScreenStyle';
 import { Keyboard } from "react-native";
 import ProdutoCard from '../../components/product_card/ProductCard';
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ProdutoList({ navigation, route }) {
     const [categoria, setCategoria] = useState();
@@ -18,6 +19,12 @@ export default function ProdutoList({ navigation, route }) {
         console.log('inciando pagina')
         iniciaPagina();
     }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            iniciaPagina();
+        }, [])
+    );
 
     async function iniciaPagina() {
         await ProdutoDao.createTable();
