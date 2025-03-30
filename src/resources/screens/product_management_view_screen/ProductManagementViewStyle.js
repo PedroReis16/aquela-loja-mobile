@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { COLORS as Colors } from "../../../app/models/Colors";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(247, 140, 0, 0.85)",
+    backgroundColor: Colors.backgroundColor,
     alignItems: "center",
     justifyContent: "top-center",
   },
@@ -21,13 +22,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: "70%",
   },
-  btnCriar: {
-    backgroundColor: "rgb(16, 0, 247)",
-    alignItems: "center",
-    borderWidth: 2,
-    borderRadius: 20,
-    marginTop: 20,
-  },
+
   btnText: {
     color: "white",
     fontSize: 25,
@@ -36,21 +31,31 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  scvCards: {
-    marginTop: 40,
-    width: "100%",
-  },
+
   picker: {
     height: 50,
     marginVertical: 10,
     backgroundColor: "#f0f0f0",
     borderRadius: 5,
   },
-  imagem: {
-    width: 100,
-    height: 100,
-    borderRadius: 8,
-    marginVertical: 10,
+
+  productView: {
+    marginTop: 40,
+    width: "100%",
+    flex: 1,
+  },
+
+  addButton: {
+    backgroundColor: Colors.primaryColor,
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    elevation: 8,
+    position: "absolute",
+    bottom: 16,
+    right: 16,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

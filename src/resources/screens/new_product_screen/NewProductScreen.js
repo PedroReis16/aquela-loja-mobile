@@ -1,19 +1,30 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Alert } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Alert,
+  Keyboard,
+  SafeAreaView,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
-import * as CategoriaDao from "../../../app/db/CategoriaDao";
-import * as ProdutoDao from "../../../app/db/ProdutoDao";
-import styles from './NewProductScreenStyle';
-import uuid from 'react-native-uuid';
-import { Keyboard } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
+import uuid from "react-native-uuid";
+import { adicionaProduto } from "../../../app/db/ProdutoDao";
+import { findAllCategorias } from "../../../app/db/CategoriaDao";
+import { styles } from "./NewProductScreenStyle";
 
 export default function ProdutoCrud({ navigation, route }) {
   const [codigo, setCodigo] = useState();
-  const [descricao, setDescricao] = useState();
-  const [preco, setPreco] = useState();
-  const [categoria, setCategoria] = useState();
+  const [descricao, setDescricao] = useState("");
+  const [preco, setPreco] = useState("");
+  const [categoria, setCategoria] = useState("");
   const [todasCategorias, setTodasCategorias] = useState([]);
   const [produtos, setProdutos] = useState([]);
   const [imagemUri, setImagemUri] = useState(null);
@@ -23,29 +34,25 @@ export default function ProdutoCrud({ navigation, route }) {
   }, []);
 
   async function iniciaPagina() {
-    await carregaProdutos();
-    const categorias = await CategoriaDao.findAllCategorias();
-    setTodasCategorias(categorias);
+    try {
+      let categorias = await findAllCategorias();
 
-    if (route.params.codigoParam) {
-      const produto = ProdutoDao.findByCodigo(route.params.codigoParam);
-      setCodigo(produto.codigo);
-      setDescricao(produto.descricao);
-      setPreco(produto.preco);
-      setCategoria(produto.categoria)
-      setImagemUri(produto.imagem)
+      setTodasCategorias(categorias);
+      setCategoria(categorias[0].id);
+
+      if (route.params && route.params.codigoParam) {
+        const produto = await ProdutoDao.findByCodigo(route.params.codigoParam);
+        setCodigo(produto.codigo);
+        setDescricao(produto.descricao);
+        setPreco(produto.preco);
+        setCategoria(produto.categoria);
+        setImagemUri(produto.imagem);
+      }
+    } catch (error) {
+      console.log("Erro ao iniciar página:", error);
+      Alert.alert("Erro", "Não foi possível carregar os dados iniciais");
     }
   }
-
-  // async function carregaProdutos() {
-  //   try {
-  //     let produtos = await ProdutoDao.findAllProdutos();
-  //     setProdutos(produtos);
-  //   } catch (e) {
-  //     Alert.alert('Erro', 'Não foi possível carregar os produtos');
-  //     console.log(e);
-  //   }
-  // }
 
   const selecionarImagem = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -66,15 +73,21 @@ export default function ProdutoCrud({ navigation, route }) {
   };
 
   async function salvaDados() {
-    if (descricao === undefined || preco === undefined || categoria === undefined || imagemUri === undefined) {
-      Alert.alert('Incompleto', 'faltam dados para o cadastro');
-
+    if (
+      descricao === undefined ||
+      preco === undefined ||
+      categoria === undefined ||
+      imagemUri === undefined
+    ) {
+      Alert.alert("Incompleto", "Faltam dados para o cadastro");
       return;
     }
 
-    const novo = (codigo == undefined);
+    const novo = codigo === undefined;
+    var teste = novo ? uuid.v4() : codigo;
+
     let obj = {
-      codigo: novo ? uuid.v4() : codigo,
+      codigo: teste,
       descricao: descricao,
       preco: preco,
       categoria: categoria,
@@ -82,81 +95,160 @@ export default function ProdutoCrud({ navigation, route }) {
     };
     try {
       if (novo) {
-        console.log(obj.codigo)
-        let resposta = await ProdutoDao.adicionaProduto(obj)
+        console.log(obj.codigo);
+        let resposta = await adicionaProduto(obj);
 
-        if (resposta)
-          Alert.alert('Sucesso', 'Produto criado');
-        else
-          Alert.alert('Erro', 'Não foi possível inserir o produto');
+        if (resposta) Alert.alert("Sucesso", "Produto criado");
+        else Alert.alert("Erro", "Não foi possível inserir o produto");
       } else {
+        console.log("editar");
         let resposta = await ProdutoDao.editarProduto(obj);
 
-        if (resposta)
-          Alert.alert('Sucesso', 'Produto alterada');
-        else
-          Alert.alert('Erro', 'Não foi possível alterar');
+        if (resposta) Alert.alert("Sucesso", "Produto alterado");
+        else Alert.alert("Erro", "Não foi possível alterar");
       }
 
       Keyboard.dismiss();
       limpaCampos();
+      navigation.goBack();
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível inserir o produto')
-      console.log(error)
+      Alert.alert("Erro", "Não foi possível salvar o produto");
+      console.log(error);
     }
   }
 
   async function limpaCampos() {
     setCodigo(undefined);
     setDescricao("");
-    setPreco(0);
-    setCategoria(undefined);
-    imagemUri(null);
+    setPreco("");
+    setCategoria("");
+    setImagemUri(null);
   }
 
+  const handleCancel = () => {
+    limpaCampos();
+    navigation.goBack();
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.vwCampos}>
-        <Text style={styles.campoText}>Descrição</Text>
-        <TextInput
-          style={styles.txtCampo}
-          value={descricao}
-          onChangeText={setDescricao}
-        />
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <ScrollView style={styles.formContainer}>
+          {/* Descrição do produto */}
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>Descrição do produto</Text>
+            <View style={styles.inputContainer}>
+              <Ionicons
+                name="document-text-outline"
+                size={20}
+                color="#999"
+                style={styles.icon}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Digite a descrição"
+                value={descricao}
+                onChangeText={setDescricao}
+              />
+            </View>
+          </View>
 
-        <Text style={styles.campoText}>Preço</Text>
-        <TextInput
-          keyboardType="decimal-pad"
-          style={styles.txtCampo}
-          value={preco}
-          onChangeText={setPreco}
-        />
+          {/* Categoria */}
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>Categoria</Text>
+            <View style={styles.inputContainer}>
+              <Ionicons
+                name="grid-outline"
+                size={20}
+                color="#999"
+                style={styles.icon}
+              />
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={categoria}
+                  onValueChange={(itemValue) => setCategoria(itemValue)}
+                  style={styles.picker}
+                >
+                  <Picker.Item label="Selecione uma categoria" value="" />
+                  {todasCategorias.map((cat) => (
+                    <Picker.Item key={cat.id} label={cat.nome} value={cat.id} />
+                  ))}
+                </Picker>
+              </View>
+            </View>
+          </View>
 
-        <Text style={styles.campoText}>Categoria</Text>
-        <Picker
-          selectedValue={categoria}
-          onValueChange={(itemValue) => setCategoria(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item label="Selecione uma categoria" value="" />
-          {todasCategorias.map((cat) => (
-            <Picker.Item key={cat.id} label={cat.nome} value={cat.id} />
-          ))}
-        </Picker>
+          {/* Preço */}
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>Preço</Text>
+            <View style={styles.inputContainer}>
+              <Ionicons
+                name="pricetag-outline"
+                size={20}
+                color="#999"
+                style={styles.icon}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="0,00"
+                keyboardType="decimal-pad"
+                value={preco ? preco.toString() : ""}
+                onChangeText={setPreco}
+              />
+            </View>
+          </View>
 
-        <TouchableOpacity style={styles.btnCriar} onPress={selecionarImagem}>
-          <Text style={styles.btnText}>Selecionar Imagem</Text>
-        </TouchableOpacity>
+          {/* Seletor de imagem */}
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>Imagem do produto</Text>
+            <TouchableOpacity
+              style={styles.imageSelector}
+              onPress={selecionarImagem}
+            >
+              <Ionicons name="image-outline" size={24} color="#999" />
+              <Text style={styles.imageSelectorText}>
+                {imagemUri ? "Trocar imagem" : "Escolher imagem"}
+              </Text>
+            </TouchableOpacity>
 
-        {imagemUri && (
-          <Image source={{ uri: imagemUri }} style={styles.imagem} />
-        )}
+            {/* Preview da imagem */}
+            {imagemUri && (
+              <View style={styles.previewContainer}>
+                <Image
+                  source={{ uri: imagemUri }}
+                  style={styles.imagePreview}
+                />
+              </View>
+            )}
+          </View>
+        </ScrollView>
 
-        <TouchableOpacity style={styles.btnCriar}>
-          <Text style={styles.btnText} onPress={() => salvaDados()}>Salvar</Text>
-        </TouchableOpacity>
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={[styles.button, styles.cancelButton]}
+            onPress={handleCancel}
+          >
+            <Text style={styles.cancelButtonText}>Cancelar</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.button, styles.deleteButton]}
+            onPress={limpaCampos}
+          >
+            <Text style={styles.deleteButtonText}>Limpar</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.button, styles.saveButton]}
+            onPress={() => {
+              salvaDados();
+            }}
+          >
+            <Text style={styles.saveButtonText}>Salvar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }

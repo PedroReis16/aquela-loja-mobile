@@ -1,12 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View, TouchableOpacity, Alert, ScrollView } from "react-native";
+import { View, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useState, useEffect } from "react";
 import * as CategoriaDao from "../../../app/db/CategoriaDao";
 import * as ProdutoDao from "../../../app/db/ProdutoDao";
 import styles from "./ProductManagementViewStyle";
 import { Keyboard } from "react-native";
-import ProdutoCard from "../../components/product_card/ProductCard";
+import { Feather } from "@expo/vector-icons";
+import { ICON_MAP as Icons } from "../../../app/models/Icons";
+import { COLORS as Colors } from "../../../app/models/Colors";
+import { EditableProductCard } from "../../components/editable_product_card/EditableProductCard";
 
 export default function ProductManagementViewScreen({ navigation }) {
   const [categoria, setCategoria] = useState();
@@ -78,11 +80,7 @@ export default function ProductManagementViewScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.vwCampos}>
-        <TouchableOpacity style={styles.btnCriar} onPress={() => novoProduto()}>
-          <Text style={styles.btnText}>Novo Produto</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.campoText}>Categoria</Text>
+        {/* <Text style={styles.campoText}>Categoria</Text> */}
         <Picker
           selectedValue={categoria}
           onValueChange={(itemValue) => {
@@ -97,18 +95,24 @@ export default function ProductManagementViewScreen({ navigation }) {
           ))}
         </Picker>
 
-        <ScrollView style={styles.scvCards}>
+        <ScrollView
+          style={styles.productView}
+          contentContainerStyle={{ flex: 1, gap: 10 }}
+        >
           {produtosFiltrados.map((produto, index) => (
-            <ProdutoCard
-              produto={produto}
-              excluirProduto={() => excluirProduto(produto.codigo)}
-              editarProduto={() => editarProduto(produto.codigo)}
-              key={index.toString()}
-            />
+            <EditableProductCard product={produto} />
+            // <ProdutoCard
+            //   produto={produto}
+            //   excluirProduto={() => excluirProduto(produto.codigo)}
+            //   editarProduto={() => editarProduto(produto.codigo)}
+            //   key={index.toString()}
+            // />
           ))}
         </ScrollView>
       </View>
-      <StatusBar style="auto" />
+      <TouchableOpacity style={styles.addButton} onPress={() => novoProduto()}>
+        <Feather name={Icons.Add} size={32} color={Colors.white} />
+      </TouchableOpacity>
     </View>
   );
 }

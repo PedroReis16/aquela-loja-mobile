@@ -33,46 +33,29 @@ export async function findAllProdutos() {
     result.push(prod);
   }
 
-  return [
-    {
-      codigo: "0",
-      descricao: "Produto teste",
-      preco: 19.99,
-      categoria: "Teste",
-      imagem: require("../../../assets/banner_images/banner-four.jpg"),
-    },
-    {
-      codigo: "1",
-      descricao: "Produto teste",
-      preco: 19.99,
-      categoria: "Teste",
-      imagem: require("../../../assets/banner_images/banner-five.jpg"),
-    },
-    {
-      codigo: "2",
-      descricao: "Produto teste",
-      preco: 19.99,
-      categoria: "Teste",
-      imagem: require("../../../assets/banner_images/banner-five.jpg"),
-    },
-  ];
   return result;
 }
 
 export async function adicionaProduto(produto) {
-  let con = await getDbConnection();
+  try {
+    console.log("Adicionando produto:");
+    let con = await getDbConnection();
 
-  const result = await con.runAsync(
-    "insert into Produto (codigo, descricao, preco, categoria, imagem) values (?,?,?,?, ?)",
-    [
-      produto.codigo,
-      produto.descricao,
-      produto.preco,
-      produto.categoria,
-      produto.imagem,
-    ]
-  );
+    const result = await con.runAsync(
+      "insert into Produto (codigo, descricao, preco, categoria, imagem) values (?,?,?,?, ?)",
+      [
+        produto.codigo,
+        produto.descricao,
+        produto.preco,
+        produto.categoria,
+        produto.imagem,
+      ]
+    );
 
-  await con.closeAsync();
-  return result.changes == 1;
+    await con.closeAsync();
+    return result.changes == 1;
+  } catch (error) {
+    console.log("Erro ao adicionar produto:", error);
+    return false;
+  }
 }
