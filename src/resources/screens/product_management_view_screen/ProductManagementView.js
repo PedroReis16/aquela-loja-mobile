@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useState, useEffect } from "react";
-import * as CategoriaDao from "../../../app/db/CategoriaDao";
+import { findAllCategorias } from "../../../app/db/CategoriaDao";
 import * as ProdutoDao from "../../../app/db/ProdutoDao";
 import styles from "./ProductManagementViewStyle";
 import { Keyboard } from "react-native";
@@ -23,13 +23,15 @@ export default function ProductManagementViewScreen({ navigation }) {
   async function iniciaPagina() {
     await ProdutoDao.createTable();
     await carregaProdutos();
-    const categorias = await CategoriaDao.findAllCategorias();
+    const categorias = await findAllCategorias();
     setTodasCategorias(categorias);
   }
 
   async function carregaProdutos() {
     try {
       let produtos = await ProdutoDao.findAllProdutos();
+      console.log(produtos);
+
       setProdutos(produtos);
       setProdutosFiltrados(produtos);
     } catch (e) {

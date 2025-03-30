@@ -16,7 +16,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import uuid from "react-native-uuid";
-import { adicionaProduto } from "../../../app/db/ProdutoDao";
+import { adicionaProduto, editarProduto } from "../../../app/db/ProdutoDao";
 import { findAllCategorias } from "../../../app/db/CategoriaDao";
 import { styles } from "./NewProductScreenStyle";
 
@@ -34,23 +34,17 @@ export default function ProdutoCrud({ navigation, route }) {
   }, []);
 
   async function iniciaPagina() {
-    try {
-      let categorias = await findAllCategorias();
-
-      setTodasCategorias(categorias);
+    const categorias = await findAllCategorias();
+    setTodasCategorias(categorias);
+    if (route.params.produtoParam != undefined) {
+      const produto = route.params.produtoParam;
+      setCodigo(produto.codigo);
+      setDescricao(produto.descricao);
+      setPreco(produto.preco ? String(produto.preco) : "");
+      setCategoria(produto.categoria);
+      setImagemUri(produto.imagem);
+    } else {
       setCategoria(categorias[0].id);
-
-      if (route.params && route.params.codigoParam) {
-        const produto = await ProdutoDao.findByCodigo(route.params.codigoParam);
-        setCodigo(produto.codigo);
-        setDescricao(produto.descricao);
-        setPreco(produto.preco);
-        setCategoria(produto.categoria);
-        setImagemUri(produto.imagem);
-      }
-    } catch (error) {
-      console.log("Erro ao iniciar página:", error);
-      Alert.alert("Erro", "Não foi possível carregar os dados iniciais");
     }
   }
 
@@ -95,14 +89,14 @@ export default function ProdutoCrud({ navigation, route }) {
     };
     try {
       if (novo) {
-        console.log(obj.codigo);
+        console.log("adicionar");
         let resposta = await adicionaProduto(obj);
 
         if (resposta) Alert.alert("Sucesso", "Produto criado");
         else Alert.alert("Erro", "Não foi possível inserir o produto");
       } else {
         console.log("editar");
-        let resposta = await ProdutoDao.editarProduto(obj);
+        let resposta = await editarProduto(obj);
 
         if (resposta) Alert.alert("Sucesso", "Produto alterado");
         else Alert.alert("Erro", "Não foi possível alterar");

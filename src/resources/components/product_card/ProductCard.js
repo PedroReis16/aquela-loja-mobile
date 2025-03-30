@@ -10,7 +10,7 @@ export default function ProductCardCard({
 }) {
   return (
     <View style={styles.container}>
-      {/* <Image source={{ uri: produto.imagem }} style={styles.imagem} /> */}
+      <Image source={{ uri: produto.imagem }} style={styles.imagem} />
       <Text style={styles.nome}>{produto.descricao}</Text>
       <Text style={styles.nome}>{produto.preco}</Text>
       <View style={styles.icone}>
@@ -24,7 +24,7 @@ export default function ProductCardCard({
           name="pencil"
           size={45}
           color="black"
-          onPress={() => editarProduto(produto.codigo)}
+          onPress={() => editarProduto(produto)}
         />
       </View>
     </View>

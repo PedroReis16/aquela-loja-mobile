@@ -59,3 +59,32 @@ export async function adicionaProduto(produto) {
     return false;
   }
 }
+
+export async function excluirCategoria(codigo) {
+  let con = await getDbConnection();
+
+  const result = await con.runAsync("delete from Produto where codigo = ?", [
+    codigo,
+  ]);
+  await con.closeAsync();
+
+  return result.changes == 1;
+}
+
+export async function editarProduto(produto) {
+  let con = await getDbConnection();
+
+  const result = await con.runAsync(
+    "update Produto set descricao = ?, preco = ?, categoria = ?, imagem = ? where codigo = ?",
+    [
+      produto.descricao,
+      produto.preco,
+      produto.categoria,
+      produto.imagem,
+      produto.codigo,
+    ]
+  );
+  await con.closeAsync();
+
+  return result.changes == 1;
+}
