@@ -23,27 +23,15 @@ export default function ProdutoCrud({ navigation, route }) {
   }, []);
 
   async function iniciaPagina() {
-    await carregaProdutos();
     const categorias = await CategoriaDao.findAllCategorias();
     setTodasCategorias(categorias);
-
-    if (route.params.codigoParam) {
-      const produto = ProdutoDao.findByCodigo(route.params.codigoParam);
+    if (route.params.produtoParam != undefined) {
+      const produto = route.params.produtoParam;
       setCodigo(produto.codigo);
       setDescricao(produto.descricao);
       setPreco(produto.preco);
       setCategoria(produto.categoria)
       setImagemUri(produto.imagem)
-    }
-  }
-
-  async function carregaProdutos() {
-    try {
-      let produtos = await ProdutoDao.findAllProdutos();
-      setProdutos(produtos);
-    } catch (e) {
-      Alert.alert('Erro', 'Não foi possível carregar os produtos');
-      console.log(e);
     }
   }
 
@@ -72,6 +60,8 @@ export default function ProdutoCrud({ navigation, route }) {
       return;
     }
 
+    console.log('salvando')
+
     const novo = (codigo == undefined);
     let obj = {
       codigo: novo ? uuid.v4() : codigo,
@@ -90,6 +80,7 @@ export default function ProdutoCrud({ navigation, route }) {
         else
           Alert.alert('Erro', 'Não foi possível inserir o produto');
       } else {
+        console.log('editando produto')
         let resposta = await ProdutoDao.editarProduto(obj);
 
         if (resposta)

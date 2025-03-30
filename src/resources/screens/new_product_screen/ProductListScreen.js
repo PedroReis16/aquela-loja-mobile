@@ -15,6 +15,7 @@ export default function ProdutoList({ navigation, route }) {
     const [produtosFiltrados, setProdutosFiltrados] = useState([]);
 
     useEffect(() => {
+        console.log('inciando pagina')
         iniciaPagina();
     }, []);
 
@@ -63,12 +64,13 @@ export default function ProdutoList({ navigation, route }) {
     async function efetivaDelecao(codigo) {
         await ProdutoDao.excluirCategoria(codigo);
         Keyboard.dismiss();
-        limpaCampos();
+        Alert.alert('Sucesso', 'Produto excluido')
         await carregaProdutos();
     }
 
-    async function editarProduto(codigo) {
-        navigation.navigate('CrudProduto', { codigoParam: codigo })
+    async function editarProduto(produto) {
+        console.log('passando no editar')
+        navigation.navigate('CrudProduto', { produtoParam: produto })
     }
 
     async function novoProduto() {
@@ -97,17 +99,17 @@ export default function ProdutoList({ navigation, route }) {
                     ))}
                 </Picker>
 
-                <ScrollView style={styles.scvCards}>
-                    {produtosFiltrados.map((produto, index) => (
-                        <ProdutoCard
-                            produto={produto}
-                            excluirProduto={() => excluirProduto(produto.codigo)}
-                            editarProduto={() => editarProduto(produto.codigo)}
-                            key={index.toString()}
-                        />
-                    ))}
-                </ScrollView>
             </View>
+            <ScrollView style={styles.scvCards}>
+                {produtosFiltrados.map((produto, index) => (
+                    <ProdutoCard
+                        produto={produto}
+                        excluirProduto={() => excluirProduto(produto.codigo)}
+                        editarProduto={() => editarProduto(produto)}
+                        key={index.toString()}
+                    />
+                ))}
+            </ScrollView>
             <StatusBar style="auto" />
         </View>
     );

@@ -11,7 +11,7 @@ export default function ProductCardCard({ produto, excluirProduto, editarProduto
             <Text style={styles.nome}>{produto.preco}</Text>
             <View style={styles.icone}>
                 <EvilIcons name="trash" size={45} color="black" onPress={() => excluirProduto(produto.codigo)} />
-                <EvilIcons name="pencil" size={45} color="black" onPress={() => editarProduto(produto.codigo)} />
+                <EvilIcons name="pencil" size={45} color="black" onPress={() => editarProduto(produto)} />
             </View>
         </View>
     );
