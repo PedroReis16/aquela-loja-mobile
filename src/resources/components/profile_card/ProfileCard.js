@@ -1,0 +1,29 @@
+import React from "react";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import { styles } from "./ProfileCardStyle";
+import { Feather } from "@expo/vector-icons";
+import { COLORS as Colors } from "../../../app/models/Colors";
+
+export function ProfileCard({ userName }) {
+  return (
+    <View style={styles.header}>
+      <View style={styles.profileSection}>
+        <Image
+          source={{ uri: "../../../../assets/robo-avatar.png" }}
+          style={styles.avatar}
+        />
+        <View style={styles.profileInfo}>
+          <Text style={styles.welcomeText}>Bem vindo, {userName}</Text>
+          <View style={styles.adminBadge}>
+            <Text style={styles.adminText}>{`${userName
+              .replace("á", "a")
+              .toLowerCase()}@email.com`}</Text>
+          </View>
+        </View>
+      </View>
+      <TouchableOpacity style={styles.logoutButton}>
+        <Feather name="log-out" size={16} color={Colors.error} />
+      </TouchableOpacity>
+    </View>
+  );
+}

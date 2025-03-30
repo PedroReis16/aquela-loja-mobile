@@ -6,4 +6,12 @@ export const ICON_MAP = {
   Garbage: "trash",
   Search: "search",
   Cart: "shopping-cart",
+  Passoword: "lock",
+  Visible: "eye",
+  Invisible: "eye-off",
+  Wallet: "credit-card",
+  Truck: "truck",
+  Package: "package",
+  TrendingUp: "trending-up",
+  Widgets: "grid",
 };

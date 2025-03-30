@@ -4,11 +4,13 @@ import { styles } from "./SearchBarStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { ICON_MAP as Icons } from "../../../app/models/Icons";
+import { StatusBar } from "expo-status-bar";
 
 export function SearchBar({ searchQuery, setSearchQuery }) {
   return (
     <SafeAreaView>
       <View style={styles.container}>
+        <StatusBar barStyle="dark-content" backgroundColor="black" />
         <TextInput
           style={styles.input}
           placeholder="Pesquisar..."
