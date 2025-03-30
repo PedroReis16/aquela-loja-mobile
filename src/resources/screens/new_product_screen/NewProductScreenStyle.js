@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     },
     scvCards: {
         marginTop: 40,
-        width: '80%',
+        width: '100%',
     },
     picker: {
       height: 50,

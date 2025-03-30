@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useState, useEffect } from "react";
-import * as ImagePicker from "expo-image-picker"; // Import do ImagePicker
+import * as ImagePicker from "expo-image-picker";
 import * as CategoriaDao from "../../../app/db/CategoriaDao";
 import * as ProdutoDao from "../../../app/db/ProdutoDao";
 import styles from './NewProductScreenStyle';
@@ -15,18 +15,26 @@ export default function ProdutoCrud({ navigation, route }) {
   const [preco, setPreco] = useState();
   const [categoria, setCategoria] = useState();
   const [todasCategorias, setTodasCategorias] = useState([]);
-  const [produtos, setProdutos] = useState();
-  const [imagemUri, setImagemUri] = useState(null); // Caminho da imagem
+  const [produtos, setProdutos] = useState([]);
+  const [imagemUri, setImagemUri] = useState(null);
 
   useEffect(() => {
     iniciaPagina();
   }, []);
 
   async function iniciaPagina() {
-    await ProdutoDao.createTable();
     await carregaProdutos();
     const categorias = await CategoriaDao.findAllCategorias();
     setTodasCategorias(categorias);
+
+    if (route.params.codigoParam) {
+      const produto = ProdutoDao.findByCodigo(route.params.codigoParam);
+      setCodigo(produto.codigo);
+      setDescricao(produto.descricao);
+      setPreco(produto.preco);
+      setCategoria(produto.categoria)
+      setImagemUri(produto.imagem)
+    }
   }
 
   // async function carregaProdutos() {
@@ -82,7 +90,7 @@ export default function ProdutoCrud({ navigation, route }) {
         else
           Alert.alert('Erro', 'Não foi possível inserir o produto');
       } else {
-        let resposta = await ProdutoDao.editaCategoria(obj);
+        let resposta = await ProdutoDao.editarProduto(obj);
 
         if (resposta)
           Alert.alert('Sucesso', 'Produto alterada');
@@ -92,7 +100,6 @@ export default function ProdutoCrud({ navigation, route }) {
 
       Keyboard.dismiss();
       limpaCampos();
-      await carregaProdutos();
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível inserir o produto')
       console.log(error)
