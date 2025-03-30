@@ -3,12 +3,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import CategoriesScreen from "../screens/categories_screen/CategoriesScreen";
 import FavoriteScreen from "../../resources/screens/FavoriteScreen";
-import ProfileScreen from "../screens/profile_screen/ProfileScreen";
 
 import { TabBar } from "../../resources/components/tab_bar/TabBar";
 import ProductNavigator from "./ProductNavigator";
 import { SearchBar } from "../../resources/components/search_bar/SearchBar";
 import HomeScreen from "../screens/home_screen/HomeScreen";
+import { COLORS as Colors } from "../../app/models/Colors";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,7 +35,13 @@ export default TabNavigator = () => {
         name="Favoritos"
         component={FavoriteScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerTitle: "Favoritos",
+          headerBackVisible: false,
+          headerStyle: {
+            backgroundColor: Colors.black,
+          },
+          headerTintColor: Colors.white,
         }}
       />
       <Tab.Screen

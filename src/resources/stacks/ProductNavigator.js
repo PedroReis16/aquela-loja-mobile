@@ -2,26 +2,32 @@ import React from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import HomeScreen from "../../resources/screens/home_screen/HomeScreen";
 import ProdutoCrud from "../../resources/screens/new_product_screen/NewProductScreen";
 import CategoriaCrud from "../screens/new_categories_screen/NewCategory";
-import { SearchBar } from "../../resources/components/search_bar/SearchBar";
 import ProfileScreen from "../screens/profile_screen/ProfileScreen";
+import { COLORS as Colors } from "../../app/models/Colors";
 
 const Stack = createNativeStackNavigator();
 
 export default ProductNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Profile"
       screenOptions={{
         animation: "fade",
         headerShown: true,
+        headerStyle: {
+          backgroundColor: Colors.black,
+        },
+        headerTintColor: Colors.white,
       }}
     >
       <Stack.Screen
-        name="Home"
+        name="Profile"
         component={ProfileScreen}
+        options={{
+          headerTitle: "Minha conta",
+        }}
       />
       <Stack.Screen
         name="CrudProduto"
