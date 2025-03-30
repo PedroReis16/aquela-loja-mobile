@@ -9,8 +9,6 @@ import ProdutoCrud from "../screens/new_product_screen/NewProductScreen";
 import { COLORS as Colors } from "../../app/models/Colors";
 import StorageDetailsScreen from "../screens/storage_details_screen/StorageDetailsScreen";
 import ProductManagementViewScreen from "../screens/product_management_view_screen/ProductManagementView";
-import WalletListScreen from "../screens/wallet_list_screen/WalletListScreen";
-import NewCardScreen from "../screens/new_card_screen/NewCardScreen";
 import UserWalletStack from "./UserWalletStack";
 
 const Stack = createNativeStackNavigator();
