@@ -8,6 +8,7 @@ import ProfileScreen from "../screens/profile_screen/ProfileScreen";
 import { TabBar } from "../../resources/components/tab_bar/TabBar";
 import ProductNavigator from "./ProductNavigator";
 import { SearchBar } from "../../resources/components/search_bar/SearchBar";
+import HomeScreen from "../screens/home_screen/HomeScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,9 +17,10 @@ export default TabNavigator = () => {
     <Tab.Navigator tabBar={(props) => <TabBar {...props} />} screenOptions={{}}>
       <Tab.Screen
         name="Inicio"
-        component={ProductNavigator}
+        component={HomeScreen}
         options={{
-          headerShown: false,
+          headerBackVisible: false,
+          header: (props) => <SearchBar {...props} />,
         }}
       />
       <Tab.Screen
@@ -38,7 +40,7 @@ export default TabNavigator = () => {
       />
       <Tab.Screen
         name="Perfil"
-        component={ProfileScreen}
+        component={ProductNavigator}
         options={{
           headerShown: false,
         }}

@@ -1,4 +1,4 @@
-// import getDbConnection from "./Connection.js";
+import getDbConnection from "./Connection";
 
 export async function createTable() {
     const query = `CREATE TABLE IF NOT EXISTS Categoria 
@@ -37,5 +37,23 @@ export async function adicionaCategoria(categoria) {
         ('insert into Categoria (id, nome) values (?,?)', [categoria.id, categoria.nome]);
 
     await con.closeAsync();
+    return result.changes == 1;
+}
+
+export async function excluirCategoria(id) {
+    let con = await getDbConnection();
+
+    const result = await con.runAsync('delete from Categoria where id = ?', [id]);
+    await con.closeAsync();
+
+    return result.changes == 1;  
+}
+
+export async function editaCategoria(categoria) {
+    let con = await getDbConnection();
+
+    const result = await con.runAsync('update Categoria set nome = ? where id = ?', [categoria.nome, categoria.id])
+    await con.closeAsync();
+
     return result.changes == 1;
 }
