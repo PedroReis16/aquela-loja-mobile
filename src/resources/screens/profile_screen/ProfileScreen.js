@@ -45,14 +45,8 @@ export default function ProfileScreen({ navigation, route }) {
               <ProfileWidgetCard
                 icon={Icons.Package}
                 title={"Estoque"}
-                description={"Gerencie o estoque"}
-              />
-            )}
-            {user.role === "admin" && (
-              <ProfileWidgetCard
-                icon={Icons.TrendingUp}
-                title={"Resultados"}
-                description={"Observe como anda suas vendas"}
+                description={"Gerencie os produtos, categorias e visualize como andam suas vendas"}
+                onTap={() => navigation.navigate("StorageDetails")}
               />
             )}
           </View>

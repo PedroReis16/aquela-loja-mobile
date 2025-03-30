@@ -4,9 +4,9 @@ import { styles } from "./ProfileWidgetCardStyle";
 import { Feather } from "@expo/vector-icons";
 import { COLORS as Colors } from "../../../app/models/Colors";
 
-export function ProfileWidgetCard({ icon, title, description }) {
+export function ProfileWidgetCard({ icon, title, description, onTap }) {
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onTap}>
       <View style={styles.cardTitleContainer}>
         <Feather name={icon} size={24} color={Colors.primaryColor} />
         <Text style={styles.cardTitle}>{title}</Text>

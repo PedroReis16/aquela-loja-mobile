@@ -3,7 +3,7 @@ export const ICON_MAP = {
   Perfil: "user",
   Categorias: "list",
   Favoritos: "heart",
-  Garbage: "trash",
+  Delete: "trash",
   Search: "search",
   Cart: "shopping-cart",
   Passoword: "lock",
@@ -14,4 +14,6 @@ export const ICON_MAP = {
   Package: "package",
   TrendingUp: "trending-up",
   Widgets: "grid",
+  Edit: "edit-2",
+  Save: "save",
 };

@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import CategoriesScreen from "../screens/categories_screen/CategoriesScreen";
-import FavoriteScreen from "../../resources/screens/FavoriteScreen";
+import FavoriteScreen from "../screens/FavoriteScreen";
 
-import { TabBar } from "../../resources/components/tab_bar/TabBar";
-import ProductNavigator from "./ProductNavigator";
-import { SearchBar } from "../../resources/components/search_bar/SearchBar";
+import { TabBar } from "../components/tab_bar/TabBar";
+import ProfileNavigator from "./ProfileStack";
+import { SearchBar } from "../components/search_bar/SearchBar";
 import HomeScreen from "../screens/home_screen/HomeScreen";
 import { COLORS as Colors } from "../../app/models/Colors";
 import { AuthContext } from "../context/AuthContext";
@@ -52,7 +52,7 @@ export default TabNavigator = () => {
         <>
           <Tab.Screen
             name="Perfil"
-            component={ProductNavigator}
+            component={ProfileNavigator}
             options={{
               headerShown: false,
             }}

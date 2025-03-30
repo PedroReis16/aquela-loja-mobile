@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     height: 20,
     marginRight: 10,
     opacity: 0.5,
-    color: Colors.grey,
+    color: Colors.gray,
 
     strokeWidth: 1.5,
   },

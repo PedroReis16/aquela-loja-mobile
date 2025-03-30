@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 40,
-    borderColor: Colors.grey,
+    borderColor: Colors.gray,
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,

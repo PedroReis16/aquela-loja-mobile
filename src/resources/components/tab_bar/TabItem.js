@@ -15,7 +15,7 @@ export const TabItem = ({ route, isFocused, onPress }) => {
     >
       <FeatherIcons
         name={iconName}
-        color={isFocused ? Colors.primaryColor : Colors.darkGrey}
+        color={isFocused ? Colors.primaryColor : Colors.darkGray}
         size={24}
         strokeWidth={isFocused ? 2.5 : 1.5}
       />
