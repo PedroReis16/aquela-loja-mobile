@@ -60,11 +60,6 @@ export default ProfileNavigator = () => {
         component={ProdutoList}
         options={{ headerBackVisible: true, title: "Listagem de produto" }}
       />
-      {/* <Stack.Screen
-        name="ProductManagement"
-        component={ProductManagementViewScreen}
-        options={{ headerBackVisible: true, title: "Produtos diponíveis" }}
-      /> */}
       <Stack.Screen
         name="CrudProduto"
         component={ProdutoCrud}
