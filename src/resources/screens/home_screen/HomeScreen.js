@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import * as ProdutoDao from "../../../app/db/ProdutoDao";
 import { ProductSaleCard } from "../../components/product_sale_card/ProductSaleCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Carousel } from "../../components/products_carousel/ProductsCarousel";
 export default function HomeScreen({ navigation }) {
   const chaveCarrinho = "carrinho";
   const [produtos, setProdutos] = useState([]);
@@ -71,7 +72,30 @@ export default function HomeScreen({ navigation }) {
       Alert.alert("Erro", "Não foi possível carregar o carrinho");
     }
   }
-
+  const carouselItems = [
+    {
+      id: "1",
+      title: "Produto 1",
+      description:
+        "Descrição do produto 1 com detalhes importantes e características",
+      price: 299.99,
+      imageUrl: "https://exemplo.com/imagem1.jpg",
+    },
+    {
+      id: "2",
+      title: "Produto 2",
+      description: "Descrição do produto 2 com detalhes importantes",
+      price: 199.5,
+      imageUrl: "https://exemplo.com/imagem2.jpg",
+    },
+    {
+      id: "3",
+      title: "Produto 3",
+      description: "Descrição do produto 3",
+      price: 399.9,
+      imageUrl: "https://exemplo.com/imagem3.jpg",
+    },
+  ];
   return (
     <ScrollView
       style={styles.productView}
@@ -87,15 +111,15 @@ export default function HomeScreen({ navigation }) {
           ]}
         />
       </View>
-
-      <Text>Produtos!!!</Text>
+      <Carousel items={produtos} onItemPress={adicionaCarrinho} />
+      {/* <Text>Produtos!!!</Text>
       {produtos.map((produto, index) => (
         <ProductSaleCard
           produto={produto}
           adicionaCarrinho={() => adicionaCarrinho}
           key={index}
         />
-      ))}
+      ))} */}
     </ScrollView>
   );
 }
