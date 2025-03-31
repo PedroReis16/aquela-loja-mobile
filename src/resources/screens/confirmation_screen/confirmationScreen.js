@@ -21,19 +21,21 @@ export default function ConfirmationScreen({ navigation, route }) {
 
     async function iniciaPagina() {
         await PedidoDao.createTables();
-        console.log('iniciando tela');
         const cartoes = await CartaoDao.findAllCards({ userId: 1 });
-        console.log(cartoes);
         setCartoes(cartoes);
-        console.log(route.params.carrinho)
         setCarrinho(route.params.carrinho);
 
         const totalCarrinho = route.params.carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
         setTotal(totalCarrinho);
+        setEndereco('endereco1');
     }
 
     async function finalizarCompra() {
         try {
+            if(cartaoSelecionado === '') {
+                Alert.alert("Erro", "Selecione um cartão para prosseguir.");
+                return;
+            }
             const codigoPedido = uuid.v4();
             const dataAtual = new Date().toISOString().replace("T", " ").slice(0, 19);
 

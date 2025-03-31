@@ -83,7 +83,7 @@ export default function ProdutoCrud({ navigation, route }) {
     let obj = {
       codigo: teste,
       descricao: descricao,
-      preco: preco,
+      preco:  preco.toString().replace(",", "."),
       categoria: categoria,
       imagem: imagemUri,
     };

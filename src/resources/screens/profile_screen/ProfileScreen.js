@@ -41,6 +41,7 @@ export default function ProfileScreen({ navigation, route }) {
               icon={Icons.Truck}
               title={"Meus Pedidos"}
               description={"Acompanhe todos os seus pedidos"}
+              onTap={() => navigation.navigate("Pedidos")}
             />
             {user.role === "admin" && (
               <ProfileWidgetCard

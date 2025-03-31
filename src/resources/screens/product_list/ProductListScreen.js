@@ -10,8 +10,10 @@ import { ProductSaleCard } from "../../components/product_sale_card/ProductSaleC
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ProductListScreen({ navigation, route }) {
+  const chaveCarrinho = "carrinho";
   const { categoriaId, productName } = route.params || {};
   const [products, setProducts] = useState([]);
+  const [carrinho, setCarrinho] = useState([]);
 
   useEffect(() => {
     initScreen();
@@ -36,24 +38,29 @@ export default function ProductListScreen({ navigation, route }) {
 
   async function addOnCart(produto) {
     try {
-      let index = carrinho.findIndex((item) => item.codigo == produto.codigo);
-
+      let objString = await AsyncStorage.getItem(chaveCarrinho);
+      let carrinhoAtual = objString ? JSON.parse(objString) : [];
+  
+      let index = carrinhoAtual.findIndex((item) => item.codigo == produto.codigo);
+  
       if (index == -1) {
         let obj = {
           codigo: produto.codigo,
           imagem: produto.imagem,
           descricao: produto.descricao,
           preco: produto.preco,
+          quantidade: 1,
         };
-        carrinho.push(obj);
-
-        let objString = JSON.stringify(lista);
-        await AsyncStorage.setItem(chaveCarrinho, objString);
-        Alert.alert("Sucesso", "Item adicionado ao carrinho!");
-
-        await carregaCarrinho();
+  
+        carrinhoAtual.push(obj);
+  
+        console.log('Adicionando no carrinho: ', obj);
+  
+        setCarrinho(carrinhoAtual);
+        await AsyncStorage.setItem(chaveCarrinho, JSON.stringify(carrinhoAtual));
+        Alert.alert('Sucesso', "Item adicionado ao carrinho!");
       } else {
-        Alert.alert("Lembrete", "Produto já está no carrinho");
+        Alert.alert('Lembrete', "Produto já está no carrinho");
       }
     } catch (e) {
       Alert.alert(e.toString());

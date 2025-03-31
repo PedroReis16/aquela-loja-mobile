@@ -49,21 +49,23 @@ export async function findAllPedidos() {
                 [pedido.codigo]
             );
 
+            const endereco = pedido.endereco || pedido.endereco != "" ? pedido.endereco : "Endereço não informado";
+
             result.push({
                 codigo: pedido.codigo,
-                endereco: pedido.endereco,
+                endereco: endereco,
                 data: pedido.data,
                 itens: itens,
             });
+            
         }
-
-        await con.closeAsync();
         return result;
     } catch (error) {
         console.error("Erro ao buscar pedidos:", error);
         return [];
     }
 }
+
 
 
 export async function adicionaPedido(pedido) {

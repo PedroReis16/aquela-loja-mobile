@@ -1,14 +1,11 @@
-import { View, Text, ScrollView, Alert, Button } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import { useEffect, useState, useCallback } from "react";
 import * as PedidoDao from "../../../app/db/PedidoDao";
-import CartCard from "../../components/cart_card/CartCard";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { styles } from "./cartScreenStyle";
+import { styles } from "./OrderScreenStyle";
 import { useFocusEffect } from "@react-navigation/native";
 
-export default function CartScreen({ navigation }) {
-    const [carrinho, setCarrinho] = useState([]);
-    const [total, setTotal] = useState(0);
+export default function OrderScreen({ navigation }) {
+    const [pedidos, setPedidos] = useState([]);
 
     useEffect(() => {
         iniciaPagina();
@@ -21,39 +18,43 @@ export default function CartScreen({ navigation }) {
     );
 
     async function iniciaPagina() {
-        await carregaCarrinho();
+        await carregaPedidos();
     }
 
-    async function carregaCarrinho() {
+    async function carregaPedidos() {
         try {
-            let objString = await AsyncStorage.getItem(chaveCarrinho);
-            if (objString != null) {
-                let obj = JSON.parse(objString);
-                setCarrinho(obj);
+            const pedidos = await PedidoDao.findAllPedidos();
+            if (pedidos != null) {
+                setPedidos(pedidos);
             } else {
-                setCarrinho([]);
+                setPedidos([]);
             }
         } catch (e) {
-            Alert.alert("Erro", "Não foi possível carregar o carrinho");
+            Alert.alert("Erro", "Não foi possível carregar os pedidos");
         }
     }
 
     return (
-        <View style={{ flex: 1 }}>
-            <ScrollView
-                style={{ flex: 1, marginBottom: 70 }}
-                contentContainerStyle={styles.centeredContent}
-            >
-                {carrinho.map((produto, index) => (
-                    <CartCard produto={produto} alteraQtd={alteraQtd} key={index} />
+        <View style={{ flex: 1, padding: 16 }}>
+            <ScrollView style={{ flex: 1 }}>
+                {pedidos.map((pedido, index) => (
+                    <View key={index} style={styles.orderItem}>
+                        <Text style={styles.orderTitle}>Pedido: {pedido.codigo}</Text>
+                        <Text style={styles.orderDate}>Data: {pedido.data}</Text>
+                        <Text style={styles.orderAddress}>Endereço: {pedido.endereco}</Text>
+
+                        <Text style={styles.orderItemTitle}>Itens do Pedido:</Text>
+                        {pedido.itens.map((item, idx) => (
+                            <View key={idx} style={styles.itemContainer}>
+                                <Text style={styles.itemDescription}>{item.descricao}</Text>
+                                <Text>Quantidade: {item.quantidade}</Text>
+                                <Text>Preço: R$ {item.preco.toFixed(2)}</Text>
+                                <Text>Total: R$ {(item.preco * item.quantidade).toFixed(2)}</Text>
+                            </View>
+                        ))}
+                    </View>
                 ))}
             </ScrollView>
-
-
-            <View style={styles.footer}>
-                <Text style={styles.totalText}>Total: R$ {total.toFixed(2)}</Text>
-                <Button title="Finalizar Compra" onPress={finalizarCompra} />
-            </View>
         </View>
     );
 }
