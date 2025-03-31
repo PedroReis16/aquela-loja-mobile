@@ -6,8 +6,20 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   productView: {
-    marginTop: 30,
+    marginTop: 16,
     width: "100%",
     flex: 1,
+  },
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    marginTop: 12,
+    gap: 10,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#000",
   },
 });

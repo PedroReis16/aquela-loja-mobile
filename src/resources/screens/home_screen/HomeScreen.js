@@ -1,14 +1,14 @@
-import { View, Text, ScrollView } from "react-native";
-import { styles } from "./HomeScreenStyle";
-// import { HomeBanner } from "../../components/home_banner/HomeBanner";
-import { ImageCarousel } from "../../components/home_banner/HomeBanner";
 import { useEffect, useState } from "react";
+import { View, ScrollView, Text } from "react-native";
+import { styles } from "./HomeScreenStyle";
+import { ImageCarousel } from "../../components/home_banner/HomeBanner";
 import * as ProdutoDao from "../../../app/db/ProdutoDao";
-import ProductSaleCard from "../../components/product_sale_card/ProductSaleCard"
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Carousel } from "../../components/products_carousel/ProductsCarousel";
+import { Feather } from "@expo/vector-icons";
+import { ICON_MAP as Icons } from "../../../app/models/Icons";
 
 export default function HomeScreen({ navigation }) {
-
   const chaveCarrinho = "carrinho";
   const [produtos, setProdutos] = useState([]);
   const [carrinho, setCarrinho] = useState([]);
@@ -25,6 +25,7 @@ export default function HomeScreen({ navigation }) {
   async function carregaProdutos() {
     try {
       let produtos = await ProdutoDao.findAllProdutos();
+
       setProdutos(produtos);
     } catch (e) {
       Alert.alert("Erro", "Não foi possível carregar os produtos");
@@ -47,12 +48,11 @@ export default function HomeScreen({ navigation }) {
 
         let objString = JSON.stringify(lista);
         await AsyncStorage.setItem(chaveCarrinho, objString);
-        Alert.alert('Sucesso', "Item adicionado ao carrinho!");
+        Alert.alert("Sucesso", "Item adicionado ao carrinho!");
 
         await carregaCarrinho();
-      }
-      else {
-        Alert.alert('Lembrete',"Produto já está no carrinho");
+      } else {
+        Alert.alert("Lembrete", "Produto já está no carrinho");
       }
     } catch (e) {
       Alert.alert(e.toString());
@@ -70,14 +70,14 @@ export default function HomeScreen({ navigation }) {
         setLista([]);
       }
     } catch (e) {
-      Alert.alert('Erro', 'Não foi possível carregar o carrinho');
+      Alert.alert("Erro", "Não foi possível carregar o carrinho");
     }
   }
 
   return (
     <ScrollView
       style={styles.productView}
-      contentContainerStyle={{ flex: 1, gap: 10 }}
+      contentContainerStyle={{ gap: 10, paddingBottom: 20 }}
     >
       <View style={styles.container}>
         <ImageCarousel
@@ -90,10 +90,20 @@ export default function HomeScreen({ navigation }) {
         />
       </View>
 
-      <Text>Produtos!!!</Text>
-      {produtos.map((produto, index) => (
-        <ProductSaleCard produto={produto} adicionaCarrinho={() => adicionaCarrinho}  key={index}/>
-      ))}
+      <View>
+        <View style={styles.titleContainer}>
+          <Feather name={Icons.Percent} size={16} color="black" />
+          <Text style={styles.title}>Aquele precinho</Text>
+        </View>
+        <Carousel items={produtos} onItemPress={adicionaCarrinho} />
+      </View>
+      <View>
+        <View style={styles.titleContainer}>
+          <Feather name={Icons.Cart} size={16} color="black" />
+          <Text style={styles.title}>Aquelas recomendações</Text>
+        </View>
+        <Carousel items={produtos} onItemPress={adicionaCarrinho} />
+      </View>
     </ScrollView>
   );
 }
