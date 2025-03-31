@@ -92,7 +92,7 @@ export default function HomeScreen({ navigation }) {
 
       <Text>Produtos!!!</Text>
       {produtos.map((produto, index) => (
-        <ProductSaleCard produto={produto} adicionaCarrinho={() => adicionaCarrinho} />
+        <ProductSaleCard produto={produto} adicionaCarrinho={() => adicionaCarrinho}  key={index}/>
       ))}
     </ScrollView>
   );
