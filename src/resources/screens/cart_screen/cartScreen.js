@@ -90,9 +90,11 @@ export default function CartScreen({ navigation }) {
     }
 
     function finalizarCompra() {
-        navigation.navigate("Confirmacao", { carrinho: carrinho})
-        // setCarrinho([]);
-        // AsyncStorage.removeItem(chaveCarrinho);
+        if (carrinho.length >= 1) {
+            navigation.navigate("Confirmacao", { carrinho: carrinho })
+        } else {
+            Alert.alert('Carrinho vaizo', 'Selecione algum item para continuar com a compra')
+        }
     }
 
     return (

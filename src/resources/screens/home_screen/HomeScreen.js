@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { View, ScrollView, Text, Alert } from "react-native";
 import { styles } from "./HomeScreenStyle";
 import { ImageCarousel } from "../../components/home_banner/HomeBanner";
@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Carousel } from "../../components/products_carousel/ProductsCarousel";
 import { Feather } from "@expo/vector-icons";
 import { ICON_MAP as Icons } from "../../../app/models/Icons";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function HomeScreen({ navigation }) {
   const chaveCarrinho = "carrinho";
@@ -16,6 +17,12 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     iniciaPagina();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      iniciaPagina();
+    }, [])
+  );
 
   async function iniciaPagina() {
     await ProdutoDao.createTable();
@@ -35,15 +42,12 @@ export default function HomeScreen({ navigation }) {
 
   async function adicionaCarrinho(produto) {
     try {
-      // Carrega o carrinho atual diretamente do AsyncStorage para garantir que está atualizado
       let objString = await AsyncStorage.getItem(chaveCarrinho);
       let carrinhoAtual = objString ? JSON.parse(objString) : [];
   
-      // Verifica se o produto já está no carrinho
       let index = carrinhoAtual.findIndex((item) => item.codigo == produto.codigo);
   
       if (index == -1) {
-        // Cria o objeto do produto
         let obj = {
           codigo: produto.codigo,
           imagem: produto.imagem,
@@ -52,12 +56,10 @@ export default function HomeScreen({ navigation }) {
           quantidade: 1,
         };
   
-        // Adiciona o produto ao carrinho atual
         carrinhoAtual.push(obj);
   
         console.log('Adicionando no carrinho: ', obj);
   
-        // Atualiza o estado e o AsyncStorage
         setCarrinho(carrinhoAtual);
         await AsyncStorage.setItem(chaveCarrinho, JSON.stringify(carrinhoAtual));
         Alert.alert('Sucesso', "Item adicionado ao carrinho!");

@@ -20,8 +20,6 @@ export async function createTable() {
 export async function findAllCards({ userId }) {
   var result = [];
   let con = await getDbConnection();
-  console.log('iniciando banco');
-  console.log('teste');
   const linhas = await con.getAllAsync("SELECT * FROM userCard ");
 
   for (const linha of linhas) {
