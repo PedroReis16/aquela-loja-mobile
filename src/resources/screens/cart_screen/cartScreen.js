@@ -1,9 +1,10 @@
 import { View, Text, ScrollView, Alert, Button } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import * as ProdutoDao from "../../../app/db/ProdutoDao";
 import CartCard from "../../components/cart_card/CartCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./cartScreenStyle";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function CartScreen({ navigation }) {
     const chaveCarrinho = "carrinho";
@@ -18,10 +19,14 @@ export default function CartScreen({ navigation }) {
         calculaTotal();
     }, [carrinho]);
 
+    useFocusEffect(
+        useCallback(() => {
+            iniciaPagina();
+        }, [])
+    );
+
     async function iniciaPagina() {
-        console.log("inicia carrinho");
         await carregaCarrinho();
-        console.log("carrega carrinho");
     }
 
     async function alteraQtd(codigo, sinal) {
@@ -35,7 +40,6 @@ export default function CartScreen({ navigation }) {
                 } else if (sinal === "-" && novoCarrinho[index].quantidade > 1) {
                     novoCarrinho[index].quantidade -= 1;
                 } else if (sinal === "-" && novoCarrinho[index].quantidade === 1) {
-                    // Alerta de confirmação para remoção
                     Alert.alert(
                         "Remover produto",
                         "Deseja realmente remover este item do carrinho?",
@@ -68,12 +72,9 @@ export default function CartScreen({ navigation }) {
 
     async function carregaCarrinho() {
         try {
-            console.log("entra load");
             let objString = await AsyncStorage.getItem(chaveCarrinho);
-            console.log(objString);
             if (objString != null) {
                 let obj = JSON.parse(objString);
-                console.log("carrinho carregado: ", obj);
                 setCarrinho(obj);
             } else {
                 setCarrinho([]);
@@ -89,18 +90,22 @@ export default function CartScreen({ navigation }) {
     }
 
     function finalizarCompra() {
-        Alert.alert("Compra finalizada", "Obrigado por comprar conosco!");
-        setCarrinho([]);
-        AsyncStorage.removeItem(chaveCarrinho);
+        navigation.navigate("Confirmacao", { carrinho: carrinho})
+        // setCarrinho([]);
+        // AsyncStorage.removeItem(chaveCarrinho);
     }
 
     return (
         <View style={{ flex: 1 }}>
-            <ScrollView style={{ flex: 1, marginBottom: 70 }}>
+            <ScrollView
+                style={{ flex: 1, marginBottom: 70 }}
+                contentContainerStyle={styles.centeredContent}
+            >
                 {carrinho.map((produto, index) => (
                     <CartCard produto={produto} alteraQtd={alteraQtd} key={index} />
                 ))}
             </ScrollView>
+
 
             <View style={styles.footer}>
                 <Text style={styles.totalText}>Total: R$ {total.toFixed(2)}</Text>

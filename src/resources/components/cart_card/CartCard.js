@@ -8,24 +8,24 @@ export default function CartCard({
 }) {
   return (
     <View style={styles.productCard}>
-      <View style={styles.vwImage}>
-        <Image source={{ uri: produto.imagem }} style={styles.productImage} resizeMode="stretch" />
-      </View>
-  
-      <View style={styles.row}>
-        <View>
-          <Text style={styles.productName}>{produto.descricao}</Text>
-          <Text style={styles.productPrice}>R$ {produto.preco * produto.quantidade}</Text>
+      <View style={styles.card}>
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: produto.imagem }} style={styles.image} resizeMode="stretch" />
         </View>
-        
-        <TouchableOpacity onPress={() => alteraQtd(produto.codigo, '-')}>
-          <FontAwesome5 name="minus-square" size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.productPrice}> {produto.quantidade}</Text>
-        <TouchableOpacity onPress={() => alteraQtd(produto.codigo, '+')}>
-          <FontAwesome5 name="plus-square" size={24} color="black" />
-        </TouchableOpacity>
-        {console.log('produto:', produto)}
+        <View style={styles.contentContainer}>
+          <Text style={styles.productName}>{produto.descricao}</Text>
+          <Text style={styles.productPrice}>R$ {(produto.preco * produto.quantidade).toFixed(2)}</Text>
+
+          <View style={styles.row}>
+            <TouchableOpacity onPress={() => alteraQtd(produto.codigo, '-')}>
+              <FontAwesome5 name="minus-square" size={24} color="black" />
+            </TouchableOpacity>
+            <Text style={styles.productPrice}> {produto.quantidade}</Text>
+            <TouchableOpacity onPress={() => alteraQtd(produto.codigo, '+')}>
+              <FontAwesome5 name="plus-square" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </View>
   );
