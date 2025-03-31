@@ -8,10 +8,8 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   scrollView: {
-    flex: 1,
-    paddingBottom: 20,
+    flexGrow: 1,
   },
-
   productItem: {
     backgroundColor: "white",
     borderRadius: 8,
@@ -45,7 +43,7 @@ export const styles = StyleSheet.create({
   },
 
   pickerContainer: {
-    marginVertical: 12,
+    marginVertical: 8,
     backgroundColor: "white",
     borderRadius: 8,
     paddingVertical: 10,
@@ -65,29 +63,28 @@ export const styles = StyleSheet.create({
     color: "#333",
     marginBottom: 8,
   },
-  
+
   footer: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: Colors.primary,
-    paddingVertical: 16,
+    backgroundColor: "#fff",
+    padding: 16,
+    borderTopWidth: 1,
+    borderColor: "#ccc",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "center",
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
   },
   totalText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
-    color: "white",
-    marginBottom: 12,
   },
   finalButton: {
-    backgroundColor: "#22d3ee",
     borderRadius: 4,
-    padding: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -95,6 +92,10 @@ export const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  vwPicker: {
+    paddingBottom: 55,
+    backgroundColor: Colors.background,
   },
 });
 
