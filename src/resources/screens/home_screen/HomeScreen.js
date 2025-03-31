@@ -4,11 +4,9 @@ import { styles } from "./HomeScreenStyle";
 import { ImageCarousel } from "../../components/home_banner/HomeBanner";
 import { useEffect, useState } from "react";
 import * as ProdutoDao from "../../../app/db/ProdutoDao";
-import ProductSaleCard from "../../components/product_sale_card/ProductSaleCard"
+import { ProductSaleCard } from "../../components/product_sale_card/ProductSaleCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 export default function HomeScreen({ navigation }) {
-
   const chaveCarrinho = "carrinho";
   const [produtos, setProdutos] = useState([]);
   const [carrinho, setCarrinho] = useState([]);
@@ -25,6 +23,7 @@ export default function HomeScreen({ navigation }) {
   async function carregaProdutos() {
     try {
       let produtos = await ProdutoDao.findAllProdutos();
+
       setProdutos(produtos);
     } catch (e) {
       Alert.alert("Erro", "Não foi possível carregar os produtos");
@@ -47,12 +46,11 @@ export default function HomeScreen({ navigation }) {
 
         let objString = JSON.stringify(lista);
         await AsyncStorage.setItem(chaveCarrinho, objString);
-        Alert.alert('Sucesso', "Item adicionado ao carrinho!");
+        Alert.alert("Sucesso", "Item adicionado ao carrinho!");
 
         await carregaCarrinho();
-      }
-      else {
-        Alert.alert('Lembrete',"Produto já está no carrinho");
+      } else {
+        Alert.alert("Lembrete", "Produto já está no carrinho");
       }
     } catch (e) {
       Alert.alert(e.toString());
@@ -70,7 +68,7 @@ export default function HomeScreen({ navigation }) {
         setLista([]);
       }
     } catch (e) {
-      Alert.alert('Erro', 'Não foi possível carregar o carrinho');
+      Alert.alert("Erro", "Não foi possível carregar o carrinho");
     }
   }
 
@@ -92,7 +90,11 @@ export default function HomeScreen({ navigation }) {
 
       <Text>Produtos!!!</Text>
       {produtos.map((produto, index) => (
-        <ProductSaleCard produto={produto} adicionaCarrinho={() => adicionaCarrinho}  key={index}/>
+        <ProductSaleCard
+          produto={produto}
+          adicionaCarrinho={() => adicionaCarrinho}
+          key={index}
+        />
       ))}
     </ScrollView>
   );

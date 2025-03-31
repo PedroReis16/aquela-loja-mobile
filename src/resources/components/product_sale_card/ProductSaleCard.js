@@ -1,24 +1,24 @@
 import { Image, Text, View, TouchableOpacity } from "react-native";
 import styles from "./ProductSaleCardStyle";
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
-export default function ProductSaleCard({
-  produto,
-  adicionaCarrinho
-}) {
+export function ProductSaleCard({ produto: product, adicionaCarrinho }) {
   return (
-    <View style={styles.productCard}>
-      <View style={styles.vwImage}>
-        <Image source={{ uri: produto.imagem }} style={styles.productImage} resizeMode="stretch" />
+    <View style={styles.card}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={product.imagem}
+          style={styles.image}
+          resizeMode="contain"
+        />
       </View>
-
-      <View style={styles.row}>
-        <View>
-          <Text style={styles.productName}>{produto.descricao}</Text>
-          <Text style={styles.productPrice}>R$ {produto.preco}</Text>
-        </View>
-        <TouchableOpacity onPress={adicionaCarrinho(produto)}>
-          <FontAwesome5 name="cart-plus" size={40} color="black" />
+      <View style={styles.contentContainer}>
+        <Text style={styles.productTitle}>{product.descricao}</Text>
+        <Text style={styles.productPrice}>R$ {product.preco}</Text>
+        <Text style={styles.installmentPrice}>
+          ou 10x de R$ {(product.preco / 10).toFixed(2)}
+        </Text>
+        <TouchableOpacity style={styles.buyButton} activeOpacity={0.8} onPress={() => adicionaCarrinho(product)}>
+          <Text style={styles.buyButtonText}>Comprar</Text>
         </TouchableOpacity>
       </View>
     </View>
