@@ -52,11 +52,7 @@ export default function LoginScreen({ navigation, route }) {
 
       <Text style={styles.label}>Email:</Text>
       <View style={styles.inputContainer}>
-        <FeatherIcons
-          name={Icons["Perfil"]}
-          style={styles.inputIcon}
-          size={20}
-        />
+        <FeatherIcons name={Icons.Perfil} style={styles.inputIcon} size={20} />
         <TextInput
           style={styles.input}
           placeholder="exemplo@gmail.com"
@@ -71,7 +67,7 @@ export default function LoginScreen({ navigation, route }) {
       <Text style={styles.label}>Senha:</Text>
       <View style={styles.inputContainer}>
         <FeatherIcons
-          name={Icons["Password"]}
+          name={Icons.Passoword}
           style={styles.inputIcon}
           size={20}
         />
