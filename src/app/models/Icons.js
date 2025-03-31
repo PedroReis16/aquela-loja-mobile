@@ -18,4 +18,5 @@ export const ICON_MAP = {
   Save: "save",
   Add: "plus",
   Arrow_Right: "chevron-right",
+  Percent: "percent",
 };
