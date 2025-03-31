@@ -6,7 +6,7 @@ import { Feather } from "@expo/vector-icons";
 import { ICON_MAP as Icons } from "../../../app/models/Icons";
 import { StatusBar } from "expo-status-bar";
 
-export function SearchBar({ searchQuery, setSearchQuery }) {
+export function SearchBar({ searchQuery, setSearchQuery, navigation }) {
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -17,7 +17,7 @@ export function SearchBar({ searchQuery, setSearchQuery }) {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Carrinho")}>
           <Feather name={Icons.Cart} size={24} color="white" />
         </TouchableOpacity>
       </View>

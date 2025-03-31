@@ -17,7 +17,7 @@ export default function ProductSaleCard({
           <Text style={styles.productName}>{produto.descricao}</Text>
           <Text style={styles.productPrice}>R$ {produto.preco}</Text>
         </View>
-        <TouchableOpacity onPress={adicionaCarrinho(produto)}>
+        <TouchableOpacity onPress={adicionaCarrinho}>
           <FontAwesome5 name="cart-plus" size={40} color="black" />
         </TouchableOpacity>
       </View>

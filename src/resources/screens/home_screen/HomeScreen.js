@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import { styles } from "./HomeScreenStyle";
 // import { HomeBanner } from "../../components/home_banner/HomeBanner";
 import { ImageCarousel } from "../../components/home_banner/HomeBanner";
@@ -34,30 +34,40 @@ export default function HomeScreen({ navigation }) {
 
   async function adicionaCarrinho(produto) {
     try {
-      let index = carrinho.findIndex((item) => item.codigo == produto.codigo);
-
+      // Carrega o carrinho atual diretamente do AsyncStorage para garantir que está atualizado
+      let objString = await AsyncStorage.getItem(chaveCarrinho);
+      let carrinhoAtual = objString ? JSON.parse(objString) : [];
+  
+      // Verifica se o produto já está no carrinho
+      let index = carrinhoAtual.findIndex((item) => item.codigo == produto.codigo);
+  
       if (index == -1) {
+        // Cria o objeto do produto
         let obj = {
           codigo: produto.codigo,
           imagem: produto.imagem,
           descricao: produto.descricao,
           preco: produto.preco,
+          quantidade: 1,
         };
-        carrinho.push(obj);
-
-        let objString = JSON.stringify(lista);
-        await AsyncStorage.setItem(chaveCarrinho, objString);
+  
+        // Adiciona o produto ao carrinho atual
+        carrinhoAtual.push(obj);
+  
+        console.log('Adicionando no carrinho: ', obj);
+  
+        // Atualiza o estado e o AsyncStorage
+        setCarrinho(carrinhoAtual);
+        await AsyncStorage.setItem(chaveCarrinho, JSON.stringify(carrinhoAtual));
         Alert.alert('Sucesso', "Item adicionado ao carrinho!");
-
-        await carregaCarrinho();
-      }
-      else {
-        Alert.alert('Lembrete',"Produto já está no carrinho");
+      } else {
+        Alert.alert('Lembrete', "Produto já está no carrinho");
       }
     } catch (e) {
       Alert.alert(e.toString());
     }
   }
+  
 
   async function carregaCarrinho() {
     try {
@@ -67,7 +77,7 @@ export default function HomeScreen({ navigation }) {
         let obj = JSON.parse(objString);
         setCarrinho(obj);
       } else {
-        setLista([]);
+        setCarrinho([]);
       }
     } catch (e) {
       Alert.alert('Erro', 'Não foi possível carregar o carrinho');
@@ -92,7 +102,7 @@ export default function HomeScreen({ navigation }) {
 
       <Text>Produtos!!!</Text>
       {produtos.map((produto, index) => (
-        <ProductSaleCard produto={produto} adicionaCarrinho={() => adicionaCarrinho}  key={index}/>
+        <ProductSaleCard produto={produto} adicionaCarrinho={() => adicionaCarrinho(produto)}  key={index}/>
       ))}
     </ScrollView>
   );
