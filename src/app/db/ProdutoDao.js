@@ -39,6 +39,56 @@ export async function findAllProdutos() {
   return result;
 }
 
+export async function findProductsByCategory(categoria) {
+  var result = [];
+
+  const con = await getDbConnection();
+  const linhas = await con.getAllAsync(
+    "SELECT p.codigo, p.descricao, p.preco,p.categoria as 'categoria', c.nome as 'categoriaNome',p.imagem FROM Produto p INNER JOIN Categoria c ON p.categoria = c.id WHERE c.id = ?",
+    [categoria]
+  );
+
+  for (const linha of linhas) {
+    let prod = {
+      codigo: linha.codigo,
+      descricao: linha.descricao,
+      preco: linha.preco,
+      categoria: linha.categoria,
+      categoriaNome: linha.categoriaNome,
+      imagem: linha.imagem,
+    };
+
+    result.push(prod);
+  }
+
+  return result;
+}
+
+export async function findProductsByName(nome) {
+  var result = [];
+
+  const con = await getDbConnection();
+  const linhas = await con.getAllAsync(
+    "SELECT p.codigo, p.descricao, p.preco,p.categoria as 'categoria', c.nome as 'categoriaNome',p.imagem FROM Produto p INNER JOIN Categoria c ON p.categoria = c.id WHERE p.descricao LIKE ?",
+    [`%${nome}%`]
+  );
+
+  for (const linha of linhas) {
+    let prod = {
+      codigo: linha.codigo,
+      descricao: linha.descricao,
+      preco: linha.preco,
+      categoria: linha.categoria,
+      categoriaNome: linha.categoriaNome,
+      imagem: linha.imagem,
+    };
+
+    result.push(prod);
+  }
+
+  return result;
+}
+
 export async function adicionaProduto(produto) {
   try {
     console.log("Adicionando produto:");
