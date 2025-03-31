@@ -19,7 +19,9 @@ export async function findAllProdutos() {
   var result = [];
 
   const con = await getDbConnection();
-  const linhas = await con.getAllAsync("SELECT * FROM Produto");
+  const linhas = await con.getAllAsync(
+    "SELECT p.codigo, p.descricao, p.preco,p.categoria as 'categoria', c.nome as 'categoriaNome',p.imagem FROM Produto p INNER JOIN Categoria c ON p.categoria = c.id"
+  );
 
   for (const linha of linhas) {
     let prod = {
@@ -27,6 +29,7 @@ export async function findAllProdutos() {
       descricao: linha.descricao,
       preco: linha.preco,
       categoria: linha.categoria,
+      categoriaNome: linha.categoriaNome,
       imagem: linha.imagem,
     };
 
@@ -60,7 +63,7 @@ export async function adicionaProduto(produto) {
   }
 }
 
-export async function excluirCategoria(codigo) {
+export async function excluirProduto(codigo) {
   let con = await getDbConnection();
 
   const result = await con.runAsync("delete from Produto where codigo = ?", [
