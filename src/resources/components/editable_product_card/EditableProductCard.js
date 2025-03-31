@@ -1,18 +1,41 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./EditableProductCardStyle";
 
-export function EditableProductCard({ product }) {
+export function EditableProductCard({
+  produto: product,
+  excluirProduto,
+  editarProduto,
+}) {
   return (
-    <View style={styles.productCard}>
+    <View style={styles.card}>
       <Image
-        source={product.imagem}
-        style={styles.productImage}
-        resizeMode="stretch"
+        source={{ uri: product.imagem }}
+        style={styles.image}
+        resizeMode="contain"
       />
-      <Text style={styles.productName}>{product.descricao}</Text>
-      <Text style={styles.productPrice}>R$ {product.preco}</Text>
-      <Text style={styles.productDescription}>{product.categoria}</Text>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>{product.descricao}</Text>
+        <Text style={styles.category}>{product.categoriaNome}</Text>
+        <Text style={styles.price}>{product.preco}</Text>
+      </View>
+
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={() => editarProduto(product)}
+        >
+          <Text style={styles.editButtonText}>Editar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => excluirProduto(product.codigo)}
+        >
+          <Text style={styles.deleteButtonText}>Excluir</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

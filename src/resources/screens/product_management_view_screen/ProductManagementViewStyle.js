@@ -1,50 +1,46 @@
 import { StyleSheet } from "react-native";
 import { COLORS as Colors } from "../../../app/models/Colors";
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.backgroundColor,
-    alignItems: "center",
     justifyContent: "top-center",
+    padding: 16,
   },
-  txtCampo: {
-    width: "100%",
-    borderBlockColor: "black",
-    borderWidth: 2,
-    borderRadius: 20,
+  fieldContainer: {
+    marginBottom: 20,
+  },
+  fieldLabel: {
+    fontSize: 14,
+    fontWeight: "500",
+    marginBottom: 8,
+    color: "#555",
+  },
+  inputContainer: {
+    flexDirection: "row",
     alignItems: "center",
-    fontSize: 20,
-    backgroundColor: "rgb(16, 0, 247)",
-    color: "white",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    backgroundColor: "white",
   },
-  vwCampos: {
-    marginTop: 30,
-    width: "70%",
+  icon: {
+    marginRight: 8,
   },
-
-  btnText: {
-    color: "white",
-    fontSize: 25,
-  },
-  campoText: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-
-  picker: {
+  input: {
+    flex: 1,
     height: 50,
-    marginVertical: 10,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 5,
+    fontSize: 16,
   },
-
-  productView: {
-    marginTop: 40,
-    width: "100%",
+  pickerContainer: {
     flex: 1,
   },
-
+  picker: {
+    height: 50,
+    width: "100%",
+  },
   addButton: {
     backgroundColor: Colors.primaryColor,
     width: 64,
@@ -58,5 +54,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-export default styles;

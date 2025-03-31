@@ -17,7 +17,6 @@ export async function findAllCategorias() {
     var result = [];
     let con = await getDbConnection();
     const linhas = await con.getAllAsync("SELECT * FROM Categoria");
-
     for (const linha of linhas) {
       let cat = {
         id: linha.id,
@@ -27,7 +26,6 @@ export async function findAllCategorias() {
       result.push(cat);
     }
 
-    await con.closeAsync();
     return result;
   } catch (error) {
     console.error("Error in findAllCategorias:", error);
