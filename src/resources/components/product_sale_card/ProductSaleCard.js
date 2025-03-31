@@ -6,9 +6,9 @@ export function ProductSaleCard({ produto: product, adicionaCarrinho }) {
     <View style={styles.card}>
       <View style={styles.imageContainer}>
         <Image
-          source={product.imagem}
+          source={{ uri: product.imagem }}
           style={styles.image}
-          resizeMode="contain"
+          resizeMode="stretch"
         />
       </View>
       <View style={styles.contentContainer}>
@@ -17,7 +17,11 @@ export function ProductSaleCard({ produto: product, adicionaCarrinho }) {
         <Text style={styles.installmentPrice}>
           ou 10x de R$ {(product.preco / 10).toFixed(2)}
         </Text>
-        <TouchableOpacity style={styles.buyButton} activeOpacity={0.8} onPress={() => adicionaCarrinho(product)}>
+        <TouchableOpacity
+          style={styles.buyButton}
+          activeOpacity={0.8}
+          onPress={() => adicionaCarrinho(product)}
+        >
           <Text style={styles.buyButtonText}>Comprar</Text>
         </TouchableOpacity>
       </View>

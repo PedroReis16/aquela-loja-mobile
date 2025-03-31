@@ -23,8 +23,9 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: "80%",
+    width: "90%",
     height: "80%",
+    borderRadius: 8,
   },
   contentContainer: {
     padding: 16,
