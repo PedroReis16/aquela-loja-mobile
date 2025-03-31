@@ -56,6 +56,24 @@ export default function CategoriesScreen({ navigation }) {
               </View>
             </TouchableOpacity>
           ))}
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Produtos")
+          }
+        >
+          <View style={styles.categoryContainer}>
+            <View style={styles.categoryTitleContainer}>
+              <Text style={styles.categoryTitle}>Ver tudo</Text>
+              <Feather
+                name={Icons.Arrow_Right}
+                size={20}
+                color="black"
+                style={styles.categoryIcon}
+              />
+            </View>
+            <View style={styles.categoryDivider} />
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
