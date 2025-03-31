@@ -27,7 +27,7 @@ export async function findAllCategorias() {
       result.push(cat);
     }
 
-    await con.closeAsync();
+    // await con.closeAsync();
     return result;
   } catch (error) {
     console.error("Error in findAllCategorias:", error);
