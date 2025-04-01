@@ -10,6 +10,7 @@ import { COLORS as Colors } from "../../app/models/Colors";
 import StorageDetailsScreen from "../screens/storage_details_screen/StorageDetailsScreen";
 import ProductManagementViewScreen from "../screens/product_management_view_screen/ProductManagementView";
 import UserWalletStack from "./UserWalletStack";
+import OrderScreen from "../screens/order_screen/OrderScreen"
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,14 @@ export default ProfileNavigator = () => {
         component={UserWalletStack}
         options={{
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Pedidos"
+        component={OrderScreen}
+        options={{
+          headerTitle: "Pedidos",
+          headerBackVisible: true,
         }}
       />
 

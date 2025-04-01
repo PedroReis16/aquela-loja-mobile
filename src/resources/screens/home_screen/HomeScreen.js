@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { View, ScrollView, Text } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { View, ScrollView, Text, Alert } from "react-native";
 import { styles } from "./HomeScreenStyle";
 import { ImageCarousel } from "../../components/home_banner/HomeBanner";
 import * as ProdutoDao from "../../../app/db/ProdutoDao";
@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Carousel } from "../../components/products_carousel/ProductsCarousel";
 import { Feather } from "@expo/vector-icons";
 import { ICON_MAP as Icons } from "../../../app/models/Icons";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function HomeScreen({ navigation }) {
   const chaveCarrinho = "carrinho";
@@ -16,6 +17,12 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     iniciaPagina();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      iniciaPagina();
+    }, [])
+  );
 
   async function iniciaPagina() {
     await ProdutoDao.createTable();
@@ -35,29 +42,35 @@ export default function HomeScreen({ navigation }) {
 
   async function adicionaCarrinho(produto) {
     try {
-      let index = carrinho.findIndex((item) => item.codigo == produto.codigo);
-
+      let objString = await AsyncStorage.getItem(chaveCarrinho);
+      let carrinhoAtual = objString ? JSON.parse(objString) : [];
+  
+      let index = carrinhoAtual.findIndex((item) => item.codigo == produto.codigo);
+  
       if (index == -1) {
         let obj = {
           codigo: produto.codigo,
           imagem: produto.imagem,
           descricao: produto.descricao,
           preco: produto.preco,
+          quantidade: 1,
         };
-        carrinho.push(obj);
-
-        let objString = JSON.stringify(lista);
-        await AsyncStorage.setItem(chaveCarrinho, objString);
-        Alert.alert("Sucesso", "Item adicionado ao carrinho!");
-
-        await carregaCarrinho();
+  
+        carrinhoAtual.push(obj);
+  
+        console.log('Adicionando no carrinho: ', obj);
+  
+        setCarrinho(carrinhoAtual);
+        await AsyncStorage.setItem(chaveCarrinho, JSON.stringify(carrinhoAtual));
+        Alert.alert('Sucesso', "Item adicionado ao carrinho!");
       } else {
-        Alert.alert("Lembrete", "Produto já está no carrinho");
+        Alert.alert('Lembrete', "Produto já está no carrinho");
       }
     } catch (e) {
       Alert.alert(e.toString());
     }
   }
+  
 
   async function carregaCarrinho() {
     try {
@@ -67,7 +80,7 @@ export default function HomeScreen({ navigation }) {
         let obj = JSON.parse(objString);
         setCarrinho(obj);
       } else {
-        setLista([]);
+        setCarrinho([]);
       }
     } catch (e) {
       Alert.alert("Erro", "Não foi possível carregar o carrinho");

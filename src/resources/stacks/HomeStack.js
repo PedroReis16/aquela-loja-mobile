@@ -3,34 +3,22 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { COLORS as Colors } from "../../app/models/Colors";
-import CategoriesScreen from "../screens/categories_screen/CategoriesScreen";
-import ProductListScreen from "../screens/product_list/ProductListScreen";
-import CartScreen from "../screens/cart_screen/cartScreen"
+import CartScreen from "../screens/cart_screen/cartScreen";
+import ConfirmationScreen from "../screens/confirmation_screen/confirmationScreen";
 import { SearchBar } from "../components/search_bar/SearchBar";
+import HomeScreen from "../screens/home_screen/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default BuyProductStack = () => {
+export default HomeStack = () => {
   return (
-    <Stack.Navigator initialRouteName="ProductCategories">
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
-        name="ProductCategories"
-        component={CategoriesScreen}
+        name="Home"
+        component={HomeScreen}
         options={{
           headerBackVisible: false,
           header: (props) => <SearchBar {...props} />,
-        }}
-      />
-      <Stack.Screen
-        name="Produtos"
-        component={ProductListScreen}
-        options={{
-          headerBackVisible: true,
-          headerTitle: "Lista de produtos",
-          headerStyle: {
-            backgroundColor: Colors.black,
-          },
-          headerTintColor: Colors.white,
         }}
       />
       <Stack.Screen
@@ -39,6 +27,18 @@ export default BuyProductStack = () => {
         options={{
           headerBackVisible: true,
           headerTitle: "Carrinho",
+          headerStyle: {
+            backgroundColor: Colors.black,
+          },
+          headerTintColor: Colors.white,
+        }}
+      />
+      <Stack.Screen
+        name="Confirmacao"
+        component={ConfirmationScreen}
+        options={{
+          headerBackVisible: true,
+          headerTitle: "Confirmação",
           headerStyle: {
             backgroundColor: Colors.black,
           },
