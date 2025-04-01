@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FlatList, SafeAreaView, TouchableOpacity } from "react-native";
 import { createTable, findAllCards } from "../../../app/db/CardDao";
 import { AuthContext } from "../../context/AuthContext";
@@ -7,6 +7,7 @@ import { styles } from "./WalletListScreenStyle";
 import { Feather } from "@expo/vector-icons";
 import { ICON_MAP as Icons } from "../../../app/models/Icons";
 import { COLORS as Colors } from "../../../app/models/Colors";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function WalletListScreen({ navigation }) {
   const { user } = useContext(AuthContext);
@@ -15,6 +16,12 @@ export default function WalletListScreen({ navigation }) {
   useEffect(() => {
     initScreen();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      initScreen();
+    }, [])
+  );
 
   async function initScreen() {
     try {

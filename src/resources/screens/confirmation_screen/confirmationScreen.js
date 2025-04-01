@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, ScrollView, Button, Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { styles } from "./confirmationScreenStyle";
@@ -6,6 +6,7 @@ import * as CartaoDao from "../../../app/db/CardDao";
 import * as PedidoDao from "../../../app/db/PedidoDao";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ConfirmationScreen({ navigation, route }) {
     const chaveCarrinho = "carrinho";
@@ -18,6 +19,12 @@ export default function ConfirmationScreen({ navigation, route }) {
     useEffect(() => {
         iniciaPagina();
     }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            iniciaPagina();
+        }, [])
+    );
 
     async function iniciaPagina() {
         await PedidoDao.createTables();
@@ -32,7 +39,7 @@ export default function ConfirmationScreen({ navigation, route }) {
 
     async function finalizarCompra() {
         try {
-            if(cartaoSelecionado === '') {
+            if (cartaoSelecionado === '') {
                 Alert.alert("Erro", "Selecione um cartão para prosseguir.");
                 return;
             }
