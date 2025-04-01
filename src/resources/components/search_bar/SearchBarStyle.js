@@ -21,8 +21,24 @@ export const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: Colors.blue,
+    marginTop: 14,
     padding: 10,
     borderRadius: 5,
     marginLeft: 10,
   },
+  logo: {
+    marginTop: 14,
+    marginLeft: 10,
+    color: Colors.primaryColor,
+    fontSize: 35,
+  },
+  imgLogo:{
+    width: 55,
+    height: 55,
+    marginTop: 10,
+    tintColor: "#00E0E0",
+  },
+  vwLogo: {
+    flexDirection: 'row'
+  }
 });

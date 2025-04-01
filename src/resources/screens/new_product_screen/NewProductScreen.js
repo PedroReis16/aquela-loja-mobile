@@ -71,7 +71,10 @@ export default function ProdutoCrud({ navigation, route }) {
       descricao === undefined ||
       preco === undefined ||
       categoria === undefined ||
-      imagemUri === undefined
+      imagemUri === undefined ||
+      descricao === "" ||
+      preco === "" ||
+      categoria == null || categoria === ""
     ) {
       Alert.alert("Incompleto", "Faltam dados para o cadastro");
       return;

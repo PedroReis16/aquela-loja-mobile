@@ -31,19 +31,6 @@ export default TabNavigator = () => {
         component={BuyProductStack}
         options={{ headerShown: false, headerBackVisible: false }}
       />
-      <Tab.Screen
-        name="Favoritos"
-        component={FavoriteScreen}
-        options={{
-          headerShown: true,
-          headerTitle: "Favoritos",
-          headerBackVisible: false,
-          headerStyle: {
-            backgroundColor: Colors.black,
-          },
-          headerTintColor: Colors.white,
-        }}
-      />
       {user ? (
         <>
           <Tab.Screen

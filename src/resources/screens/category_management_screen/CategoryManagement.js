@@ -46,6 +46,13 @@ export default function CategoryManagement({ navigation, route }) {
   }
 
   async function salvaCategoria() {
+
+    console.log('salvando: ', nome)
+    if(nome === undefined || nome === "") {
+      Alert.alert("Erro!", "Digite o nome da categoria");
+      return;
+    }
+
     const novo = id == undefined;
 
     let obj = {

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TextInput, TouchableOpacity, Text } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, Image } from "react-native";
 import { styles } from "./SearchBarStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -11,14 +11,16 @@ export function SearchBar({ searchQuery, setSearchQuery, navigation }) {
     <SafeAreaView>
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="black" />
-        <TextInput
-          style={styles.input}
-          placeholder="Pesquisar..."
-          value={searchQuery}
-          onChangeText={(text) => setSearchQuery(text)}
-        />
+        <View style={styles.vwLogo}>
+          <Image
+            source={require("../../../../assets/logo-black.png")}
+            style={styles.imgLogo}
+            resizeMode="contain"
+          />
+          <Text style={styles.logo}>Aquela</Text>
+        </View>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Carrinho")}>
-          <Feather name={Icons.Cart} size={24} color="white" />
+          <Feather name={Icons.Cart} size={30} color="white" />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
