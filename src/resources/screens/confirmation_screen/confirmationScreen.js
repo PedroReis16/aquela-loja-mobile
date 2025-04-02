@@ -101,6 +101,7 @@ export default function ConfirmationScreen({ navigation, route }) {
                         selectedValue={cartaoSelecionado}
                         onValueChange={(itemValue) => setCartaoSelecionado(itemValue)}
                     >
+                        <Picker.Item label="Selecione uma cartão" value="" />
                         {cartoes.map((cartao, index) => (
                             <Picker.Item
                                 key={cartao.id}

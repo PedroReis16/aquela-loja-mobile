@@ -27,6 +27,7 @@ export default function StorageDetailsScreen({ navigation }) {
           icon={Icons.TrendingUp}
           title={"Resultados"}
           description={"Observe como andam suas vendas"}
+          onTap={() => navigation.navigate("Grafico")}
         />
       </ScrollView>
     </View>

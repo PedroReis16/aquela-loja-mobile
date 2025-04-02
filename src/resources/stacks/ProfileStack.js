@@ -11,6 +11,7 @@ import StorageDetailsScreen from "../screens/storage_details_screen/StorageDetai
 import ProductManagementViewScreen from "../screens/product_management_view_screen/ProductManagementView";
 import UserWalletStack from "./UserWalletStack";
 import OrderScreen from "../screens/order_screen/OrderScreen"
+import DashboardScreen from "../screens/chart_screen/ChartScreen"
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,14 @@ export default ProfileNavigator = () => {
         component={OrderScreen}
         options={{
           headerTitle: "Pedidos",
+          headerBackVisible: true,
+        }}
+      />
+      <Stack.Screen
+        name="Grafico"
+        component={DashboardScreen}
+        options={{
+          headerTitle: "Resultados",
           headerBackVisible: true,
         }}
       />
